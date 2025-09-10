@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chatbot</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+      function ChatInput() {
+        return (
+          <div>
+            <input
+              type="text"
+              placeholder="Send a message to Chatbot"
+              size="40"
+              className="input-box"
+            />
+            <button>Send</button>
+          </div>
+        );
+      }
+
+      function UserMessage(props) {
+        console.log(props);
+        const message = props.message;
+        return (
+          <div>
+            <span>{message}</span>
+            <img src="/images/user.png" alt="profile" width="50" />
+          </div>
+        );
+      }
+      function BotMessage({ message }) {
+        return (
+          <div>
+            <img src="/images/robot.png" alt="bot-profile" width="50" />
+            <span>{message}</span>
+          </div>
+        );
+      }
+      const date = new Date().toLocaleDateString("en-Us", {
+        month: "long",
+        day: "2-digit",
+      });
+      console.log(date);
+      const app = (
+        <>
+          <ChatInput />
+          <UserMessage message="hello Chatbot" />
+          <BotMessage message="Hello! How can I help you?" />
+          <UserMessage message="can you get me today's date?" />
+          <BotMessage message={`Today is ${date}`} />
+          <UserMessage message="how about flip a coin" />
+          <BotMessage message="Sure! You got tails" />
+        </>
+      );
+
+      const container = document.querySelector(".js-container");
+      ReactDOM.createRoot(container).render(app);
+    </script>
+  </body>
+</html>

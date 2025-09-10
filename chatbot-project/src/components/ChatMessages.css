@@ -1,0 +1,35 @@
+
+.chat-messages-container {
+  flex-grow: 1;
+  overflow: scroll;
+  scrollbar-width: none;
+  margin-top: 1rem;
+}
+
+.empty-container {
+  margin-top: 20px;
+  color: gray;
+  text-align: center;
+}
+.description-container {
+  height: 70%;
+  /* border: 2px solid; */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: gray;
+  align-items: center;
+  gap: 10px;
+}
+.description-heading {
+  /* border: 2px solid; */
+  width: 30%;
+}
+.current-functions-list {
+  /* display: flex;
+      flex-direction: column;
+      align-items: flex-start; */
+  /* border: 2px solid; */
+  width: 25%;
+}

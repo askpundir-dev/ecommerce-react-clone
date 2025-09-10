@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>React Basics</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+      function CounterButton({ counterValue, setCounterValue }) {
+        function increaseCount() {
+          setCounterValue(counterValue + 1);
+          console.log("Done");
+        }
+
+        return (
+          <>
+            <button onClick={increaseCount}>
+              Clicked {counterValue}{" "}
+              {counterValue === 1 || counterValue === 0 ? "Time" : "Times"}
+            </button>
+          </>
+        );
+      }
+      function EnterName() {
+        const [name, setName] = React.useState("");
+      function saveName(e) {
+    const value = e.target.value;
+    if (value.length>name.length) {
+      setName(value);
+    }
+  }
+
+        return (
+          <div>
+            <input type="text" placeholder="Enter Name" onChange={saveName} />
+            <button
+              onClick={() => {
+                setName("");
+              }}
+            >
+              Reset
+            </button>
+            <button
+              onClick={() => {
+                setName("Alice");
+              }}
+            >
+              Example
+            </button>
+            <p>{name}</p>
+          </div>
+        );
+      }
+
+      function App() {
+        const [counterValue, setCounterValue] = React.useState(0);
+        let resetCounter = () => {
+          setCounterValue(0);
+        };
+
+        return (
+          <>
+            <CounterButton
+              counterValue={counterValue}
+              setCounterValue={setCounterValue}
+            />
+            <CounterButton
+              counterValue={counterValue}
+              setCounterValue={setCounterValue}
+            />
+            <button onClick={resetCounter}>Reset Counter</button>
+            <EnterName />
+          </>
+        );
+      }
+
+      const container = document.querySelector(".js-container");
+      ReactDOM.createRoot(container).render(<App />);
+    </script>
+  </body>
+</html>

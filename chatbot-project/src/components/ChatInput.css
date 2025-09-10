@@ -1,0 +1,24 @@
+.input-box-container {
+  display: flex;
+
+  justify-content: center;
+  gap: 10px;
+  margin: 0.3rem 0;
+}
+.input-box {
+  flex-grow: 1;
+  width: 80%;
+  font-size: inherit;
+  border-radius: 10px;
+  border: 1px solid;
+  padding: 0.7rem 0.9rem;
+}
+.send-button {
+  background-color: rgb(25, 135, 84);
+  font-size: inherit;
+  border-radius: 10px;
+  border: none;
+  padding: 0.7rem 0.9rem;
+  color: white;
+  font-weight: 600;
+}
