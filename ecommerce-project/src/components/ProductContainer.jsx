@@ -4,11 +4,9 @@ import products from '../../data/products.js';
 function ProductContainer() {
 
 const product=products.map((product) => {
-console.log(product);
-
   return(
-    <>
-    <div className="product-container" key={crypto.randomUUID()}>
+    
+    <div className="product-container" key={product.id}>
             <div className="product-image-container">
               <img
                 className="product-image"
@@ -32,16 +30,11 @@ console.log(product);
 
             <div className="product-quantity-container">
               <select>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
+                {[...Array(10).keys()].map((x) => (
+                  <option key={x + 1} value={x + 1}>
+                    {x + 1}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -56,15 +49,10 @@ console.log(product);
               Add to Cart
             </button>
           </div>
-    
-    </>
-  );
-  
-  
-  
-})
-console.log(product);
-return product
+  );  
+});
+
+return product;
 }
 
 
