@@ -1,20 +1,35 @@
 import axios from "axios";
+import {useEffect,useState } from 'react';
 import "./ProductContainer.css";
 
-// import products from '../../data/products.js';
-
-async function fetchProducts() {
-  const response = await fetch("http://localhost:3000/api/products");
-  const data = await response.json();
-  return data;
-}
 
 function ProductContainer() {
- axios.get("http://localhost:3000/api/products")
+  const [products, setProducts] = useState([]);
+  // USING AXIOS FOR data fetching no need of error handling here as axios has it inbuilt
+useEffect(()=>{
+  
+axios.get("http://localhost:3000/api/products")
     .then((response) => {
-      console.log(response.data); 
+      setProducts(response.data)
     })
-   
+  .catch(error=>{
+    console.error("Error fetching data:",error);
+  }) 
+},[]);
+
+/*
+// USING ASYNC AWAIT data fetching THIS ALSO NEEDS ERROR HANDLING
+useEffect(() => {
+  async function loadData() {
+    const res = await fetch('http://localhost:3000/api/products');
+    const data = await res.json();
+    setProducts(data);
+  }
+  loadData();
+}, []);
+*/
+  
+
 
   const product = products.map((product) => {
     return (
