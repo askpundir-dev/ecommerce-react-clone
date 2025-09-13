@@ -1,6 +1,7 @@
 import CheckoutHeader from "../components/CheckoutHeader.jsx";
 import "./CheckoutPage.css";
-function CheckoutPage() {
+function CheckoutPage({cart,setCart}) {
+  console.log(cart);
   document.title = "Checkout";
   return (
     <>

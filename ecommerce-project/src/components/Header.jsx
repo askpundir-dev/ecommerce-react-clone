@@ -1,21 +1,42 @@
 import { Link } from "react-router";
+import { useRef } from "react";
+import searchProducts from "../utils/searchProducts"; 
 import "./header.css";
 
-function Header() {
+function Header({ cartQuantity, products,setProducts,allProducts }) {
+  const searchProductsRef = useRef(null);
+  // console.log(products);
+ 
   return (
     <>
       <div className="header">
         <div className="left-section">
           <Link to="/" className="header-link">
-            <img className="logo" src="images/logo-white.png" />
-            <img className="mobile-logo" src="images/mobile-logo-white.png" />
+            <img className="logo" src="images/amazon-logo-white.png" />
+            <img
+              className="mobile-logo"
+              src="images/amazon-mobile-logo-white.png"
+            />
           </Link>
         </div>
 
         <div className="middle-section">
-          <input className="search-bar" type="text" placeholder="Search" />
+          <input
+            ref={searchProductsRef}
+            className="search-bar"
+            type="text"
+            placeholder="Search"
+            onKeyDown={(e)=>{
+              if(e.key==="Enter"){
+                 searchProducts({products,searchProductsRef,allProducts,setProducts});
+                 e.target.blur();
+              }
+            }}
+          />
 
-          <button className="search-button">
+          <button className="search-button" onClick={()=>{
+         searchProducts({products,searchProductsRef,allProducts,setProducts})
+          }}>
             <img className="search-icon" src="images/icons/search-icon.png" />
           </button>
         </div>
@@ -27,7 +48,7 @@ function Header() {
 
           <Link to="/checkout" className="cart-link header-link">
             <img className="cart-icon" src="images/icons/cart-icon.png" />
-            <div className="cart-quantity">3</div>
+            <div className="cart-quantity">{cartQuantity}</div>
             <div className="cart-text">Cart</div>
           </Link>
         </div>

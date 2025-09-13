@@ -65,3 +65,25 @@
   }
 }
 
+.loading{
+  font-size: 20px;
+  color: rgb(25, 135, 84);
+}
+
+.loading-body-styles{
+  display: flex;
+  height: 100vh;
+  height: 100dvh;
+  justify-content: center;
+  align-items: center;
+}
+
+.products-grid.is-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh; 
+  min-height: 70vh;         
+  overflow: hidden;
+}
+
