@@ -116,7 +116,7 @@
 }
 
 .checkout-page .product-quantity .link-primary {
-  margin-left: 3px;
+  margin-left: 0.5rem;
 }
 
 @media (max-width: 1000px) {

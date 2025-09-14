@@ -10,6 +10,7 @@ function HomePage({
   setProducts,
   allProducts,
   loading,
+  setCart,
 }) {
   document.title = "Home Page";
 
@@ -31,8 +32,8 @@ function HomePage({
           {products.length ? (
             <ProductContainer
               setCartQuantity={setCartQuantity}
-              cartQuantity={cartQuantity}
               products={products}
+              setCart={setCart}
             />
           ) : (
             <NoResults {...{ setProducts, allProducts }} />

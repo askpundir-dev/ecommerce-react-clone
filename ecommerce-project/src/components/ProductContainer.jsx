@@ -1,9 +1,8 @@
 import axios from "axios";
 import { useState, useRef } from "react";
-
 import "./ProductContainer.css";
 
-function ProductContainer({ setCartQuantity, products}) {
+function ProductContainer({ setCartQuantity, products, setCart }) {
   // Ref for storing timeouts per product
   const addToCartTimeouts = useRef({});
   const [selectedQuantities, setSelectedQuantities] = useState({});
@@ -20,39 +19,63 @@ function ProductContainer({ setCartQuantity, products}) {
 
     // console.log("Selected quantity in add to cart:",selectedQuantities[productId]||1);
 
-    const selecTedQuantity = selectedQuantities[productId] || 1;
-    axios.post("http://localhost:3000/api/cart-items", {
-      createdAt: new Date().toISOString(),
-      productId: productId,
-      quantity: selecTedQuantity,
-      updatedAt: new Date().toISOString(),
-    });
+    const selectedQuantity = selectedQuantities[productId] || 1;
+    axios
+      .post("http://localhost:3000/api/cart-items", {
+        productId,
+        quantity: selectedQuantity,
+      })
+      .then((response) => {
+        console.log(response.data);
+         const newCartItem = response.data; // backend should return the new/updated cart item
 
-    setCartQuantity((prevQuantity) => prevQuantity + selecTedQuantity);
+        setCartQuantity((prevQuantity) => prevQuantity + selectedQuantity);
 
-    // Reset quantity to 1 after adding to cart
-    setSelectedQuantities(() => {
-      return { ...selectedQuantities, [productId]: 1 };
-    });
+       // ✅ Update cart in App state
+      setCart((prevCart) => {
+        const existingItem = prevCart.find(item => item.productId === productId);
 
-    clearTimeout(addToCartTimeouts.current[productId]); // Clear any existing timeout for this product
-
-    setShowAddToCartMessage((prev) => {
-      return { ...prev, [productId]: true };
-    });
-
-    console.log(addToCartTimeouts);
-    addToCartTimeouts.current[productId] = setTimeout(() => {
-      setShowAddToCartMessage((prev) => {
-        return { ...prev, [productId]: false };
+        if (existingItem) {
+          // if item already in cart, update its quantity
+          return prevCart.map(item =>
+            item.productId === productId
+              ? { ...item, quantity: item.quantity + selectedQuantity }
+              : item
+          );
+        } else {
+          // new product added
+          return [...prevCart, newCartItem];
+        }
       });
-    }, 1500); // Hide message after 1.5 seconds
+
+        // Reset quantity to 1 after adding to cart
+        setSelectedQuantities(() => {
+          return { ...selectedQuantities, [productId]: 1 };
+        });
+
+        clearTimeout(addToCartTimeouts.current[productId]); // Clear any existing timeout for this product
+
+        setShowAddToCartMessage((prev) => {
+          return { ...prev, [productId]: true };
+        });
+
+        console.log(addToCartTimeouts);
+        addToCartTimeouts.current[productId] = setTimeout(() => {
+          setShowAddToCartMessage((prev) => {
+            return { ...prev, [productId]: false };
+          });
+        }, 1500); // Hide message after 1.5 seconds
+      })
+      .catch((err) => {
+        console.log(err.message);
+        return;
+      });
   }
   function handelProductQuantityChange(e, productId) {
     if (!productId) return;
     const quantity = parseInt(e.target.value);
-    setSelectedQuantities((prevState) => {
-      return { ...prevState, [productId]: quantity };
+    setSelectedQuantities(() => {
+      return { e, [productId]: quantity };
     });
   }
 
@@ -73,7 +96,7 @@ function ProductContainer({ setCartQuantity, products}) {
               className="product-rating-stars"
               src={`images/ratings/rating-${product.rating.stars * 10}.png`}
             />
-            <div className="product-rating-count link-primary">
+            <div className="product-rating-count  ...prevStatlink-primary">
               {product.rating.count}
             </div>
           </div>

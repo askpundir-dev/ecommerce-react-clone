@@ -6,7 +6,6 @@ import "./header.css";
 function Header({ cartQuantity, products,setProducts,allProducts }) {
   const searchProductsRef = useRef(null);
   // console.log(products);
- 
   return (
     <>
       <div className="header">

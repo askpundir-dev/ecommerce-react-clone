@@ -9,10 +9,10 @@ import "./App.css";
 function App() {
   const [cart, setCart] = useState([]);
   const [cartQuantity, setCartQuantity] = useState(0);
-  const [allProducts, setAllProducts]=useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
- // USING AXIOS FOR data fetching no need of error handling here as axios has it inbuilt
+  // USING AXIOS FOR data fetching no need of error handling here as axios has it inbuilt
   useEffect(() => {
     axios
       .get("http://localhost:3000/api/products")
@@ -62,9 +62,28 @@ loadData();
     <Routes>
       <Route
         index
-        element={<HomePage {...{ cartQuantity, setCartQuantity, products, setProducts,allProducts,loading}} />}
+        element={
+          <HomePage
+            {...{
+              cartQuantity,
+              setCartQuantity,
+              setCart,
+              products,
+              setProducts,
+              allProducts,
+              loading,
+            }}
+          />
+        }
       />
-      <Route path="checkout" element={<CheckoutPage {...{cart,setCart}} />} />
+      <Route
+        path="checkout"
+        element={
+          <CheckoutPage
+            {...{ cart, setCart, allProducts, cartQuantity, setCartQuantity }}
+          />
+        }
+      />
       <Route path="orders" element={<OrdersPage />} />
       <Route path="tracking" element={<TrackingPage />} />
     </Routes>
