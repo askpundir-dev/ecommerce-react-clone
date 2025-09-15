@@ -1,19 +1,25 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
+import DeliveryOptions from "./DeliveryOptions.jsx";
+import { getDeliveryDate } from "../utils/deliveryTime.js";
 import "./OrderSummary.css";
 
 function OrderSummary({
   cart,
   setCart,
   allProducts,
-  cartQuantity,
   setCartQuantity,
 }) {
   const quantityInputRef = useRef({});
   const [isPressed, setIsPressed] = useState({});
+  const [deliveryOption, setDeliveryOption] = useState([]);
 
-console.log(cart);
+  useEffect(() => {
+    axios.get("http://localhost:3000/api/delivery-options").then((response) => {
+      setDeliveryOption(response.data);
+    });
+  }, []);
 
   function deleteCartItem(productId) {
     axios
@@ -84,11 +90,19 @@ console.log(cart);
         const matchingProduct = allProducts.find(
           (product) => product.id === cartItem.productId
         );
+        const optionId = cartItem.deliveryOptionId;
+        const matchingOption = deliveryOption.find(
+          (option) => option.id === optionId
+        );
+        if (!matchingProduct || !matchingOption) {
+          return null; //skip render until data is ready
+        }
         // console.log(matchingProduct);
+        const deliveryDate = getDeliveryDate(matchingOption.deliveryDays);
 
         return (
           <div className="cart-item-container" key={cartItem.productId}>
-            <div className="delivery-date">Delivery date: Tuesday, June 21</div>
+            <div className="delivery-date">Delivery date: {deliveryDate}</div>
 
             <div className="cart-item-details-grid">
               <img className="product-image" src={matchingProduct.image} />
@@ -120,13 +134,6 @@ console.log(cart);
                         (quantityInputRef.current[cartItem.productId] = el)
                       }
                       defaultValue={cartItem.quantity}
-                      // onChange={(e) => {
-                      //   const inputVal = e.target.value;
-                      //   setInputValue((prev) => {
-                      //     return { ...prev, [cartItem.productId]: inputVal };
-                      //   });
-
-                      // }}
                     />
                   </span>
                   <span
@@ -166,46 +173,8 @@ console.log(cart);
                 <div className="delivery-options-title">
                   Choose a delivery option:
                 </div>
-                <div className="delivery-option">
-                  <input
-                    type="radio"
-                    checked
-                    className="delivery-option-input"
-                    name="delivery-option-1"
-                  />
-                  <div>
-                    <div className="delivery-option-date">Tuesday, June 21</div>
-                    <div className="delivery-option-price">FREE Shipping</div>
-                  </div>
-                </div>
-                <div className="delivery-option">
-                  <input
-                    type="radio"
-                    className="delivery-option-input"
-                    name="delivery-option-1"
-                  />
-                  <div>
-                    <div className="delivery-option-date">
-                      Wednesday, June 15
-                    </div>
-                    <div className="delivery-option-price">
-                      $4.99 - Shipping
-                    </div>
-                  </div>
-                </div>
-                <div className="delivery-option">
-                  <input
-                    type="radio"
-                    className="delivery-option-input"
-                    name="delivery-option-1"
-                  />
-                  <div>
-                    <div className="delivery-option-date">Monday, June 13</div>
-                    <div className="delivery-option-price">
-                      $9.99 - Shipping
-                    </div>
-                  </div>
-                </div>
+
+                <DeliveryOptions {...{ setCart, cartItem, deliveryOption }} />
               </div>
             </div>
           </div>
