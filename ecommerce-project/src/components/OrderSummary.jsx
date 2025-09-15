@@ -13,6 +13,8 @@ function OrderSummary({
   const quantityInputRef = useRef({});
   const [isPressed, setIsPressed] = useState({});
 
+console.log(cart);
+
   function deleteCartItem(productId) {
     axios
       .delete(`http://localhost:3000/api/cart-items/${productId}`)

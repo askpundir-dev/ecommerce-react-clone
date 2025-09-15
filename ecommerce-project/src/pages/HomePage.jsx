@@ -12,7 +12,7 @@ function HomePage({
   loading,
   setCart,
 }) {
-  document.title = "Home Page";
+  document.title = "Home";
 
   if (loading) {
     return (
