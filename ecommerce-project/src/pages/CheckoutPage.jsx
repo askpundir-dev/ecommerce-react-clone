@@ -1,7 +1,10 @@
+import { useState,useEffect } from "react";
+import axios from "axios";
 import CheckoutHeader from "../components/CheckoutHeader.jsx";
 import OrderSummary from "../components/OrderSummary.jsx";
 import PaymentSummary from "../components/PaymentSummary.jsx";
 import "./CheckoutPage.css";
+
 function CheckoutPage({
   cart,
   setCart,
@@ -10,6 +13,15 @@ function CheckoutPage({
   setCartQuantity,
 }) {
   document.title = "Checkout";
+  const [deliveryOption, setDeliveryOption] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:3000/api/delivery-options").then((response) => {
+      setDeliveryOption(response.data);
+    }).catch(er=>console.warn(er.message));
+  }, []);
+
+  
   return (
     <>
       <CheckoutHeader {...{ cartQuantity }} />
@@ -25,11 +37,12 @@ function CheckoutPage({
               setCart, 
               allProducts, 
               cartQuantity, 
-              setCartQuantity 
+              setCartQuantity,
+              deliveryOption 
             }
           }
           />
-          <PaymentSummary {...{ cartQuantity }} />
+          <PaymentSummary {...{ cartQuantity,cart,deliveryOption,allProducts }} />
         </div>
       </div>
     </>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 
 import DeliveryOptions from "./DeliveryOptions.jsx";
@@ -10,16 +10,11 @@ function OrderSummary({
   setCart,
   allProducts,
   setCartQuantity,
+  deliveryOption,
 }) {
   const quantityInputRef = useRef({});
   const [isPressed, setIsPressed] = useState({});
-  const [deliveryOption, setDeliveryOption] = useState([]);
-
-  useEffect(() => {
-    axios.get("http://localhost:3000/api/delivery-options").then((response) => {
-      setDeliveryOption(response.data);
-    });
-  }, []);
+  
 
   function deleteCartItem(productId) {
     axios

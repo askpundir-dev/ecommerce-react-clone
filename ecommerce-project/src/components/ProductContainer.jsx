@@ -96,7 +96,7 @@ function ProductContainer({ setCartQuantity, products, setCart }) {
               className="product-rating-stars"
               src={`images/ratings/rating-${product.rating.stars * 10}.png`}
             />
-            <div className="product-rating-count  ...prevStatlink-primary">
+            <div className="product-rating-count link-primary">
               {product.rating.count}
             </div>
           </div>

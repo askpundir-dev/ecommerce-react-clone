@@ -55,8 +55,6 @@ loadData();
         console.error("Error fetching cart items:", error);
       });
   }, []);
-  // console.log(cart);
-  // console.log(cartQuantity);
 
   return (
     <Routes>

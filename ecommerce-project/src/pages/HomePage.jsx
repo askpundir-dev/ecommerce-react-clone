@@ -14,6 +14,11 @@ function HomePage({
 }) {
   document.title = "Home";
 
+ //if i dont want to show loading
+  // if (loading) { 
+  //   return null;
+  // }
+
   if (loading) {
     return (
       <div className="loading-body-styles">
@@ -22,7 +27,7 @@ function HomePage({
     );
   }
 
-  //shorhand syntax method  for passing props
+  //shorthand syntax method  for passing props
   return (
     <>
       <Header {...{ cartQuantity, products, setProducts, allProducts }} />
