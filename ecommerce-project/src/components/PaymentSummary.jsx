@@ -1,39 +1,45 @@
-function PaymentSummary({ cartQuantity, cart, deliveryOption, allProducts }) {
-  console.log("CART:", allProducts);
-  console.log("OPTIONS:", deliveryOption);
-  // const matchingProducts = allProducts.filter((product) =>
-  //   cart.find((item) => item.productId === product.id)
-  // );
- 
+import { calculateCartSummary, formatMoney } from "../utils/cartSummary";
 
-  
+function PaymentSummary({ cart, deliveryOption, allProducts }) {
+  const summary = calculateCartSummary(cart, allProducts, deliveryOption);
+
   return (
     <div className="payment-summary">
       <div className="payment-summary-title">Payment Summary</div>
 
       <div className="payment-summary-row">
-        <div>Items ({cartQuantity}):</div>
-        <div className="payment-summary-money">$42.75</div>
+        <div>Items ({summary.totalItems}):</div>
+        <div className="payment-summary-money">
+          {formatMoney(summary.productPriceCents)}
+        </div>
       </div>
 
       <div className="payment-summary-row">
         <div>Shipping &amp; handling:</div>
-        <div className="payment-summary-money">$4.99</div>
+        <div className="payment-summary-money">
+          {formatMoney(summary.shippingPriceCents)}
+        </div>
       </div>
 
       <div className="payment-summary-row subtotal-row">
         <div>Total before tax:</div>
-        <div className="payment-summary-money">$47.74</div>
+        <div className="payment-summary-money">
+          {formatMoney(summary.totalBeforeTaxCents)}
+        </div>
       </div>
 
       <div className="payment-summary-row">
         <div>Estimated tax (10%):</div>
-        <div className="payment-summary-money">$4.77</div>
+        <div className="payment-summary-money">
+          {formatMoney(summary.taxCents)}
+        </div>
       </div>
 
       <div className="payment-summary-row total-row">
         <div>Order total:</div>
-        <div className="payment-summary-money">$52.51</div>
+        <div className="payment-summary-money">
+          {formatMoney(summary.orderTotalCents)}
+        </div>
       </div>
 
       <button className="place-order-button button-primary">
