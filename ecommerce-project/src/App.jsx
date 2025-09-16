@@ -6,6 +6,12 @@ import CheckoutPage from "./pages/CheckoutPage";
 import OrdersPage from "./pages/OrdersPage";
 import TrackingPage from "./pages/TrackingPage";
 import "./App.css";
+/**
+ * The main application component.
+ * It manages the application's state, fetches initial data for products and cart,
+ * and sets up the routing for different pages.
+ * @returns {JSX.Element} The rendered application with its routes.
+ */
 function App() {
   const [cart, setCart] = useState([]);
   const [cartQuantity, setCartQuantity] = useState(0);
@@ -15,7 +21,7 @@ function App() {
   // USING AXIOS FOR data fetching no need of error handling here as axios has it inbuilt
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/products")
+      .get("/api/products")
       .then((response) => {
         setAllProducts(response.data);
         setProducts(response.data);
@@ -24,6 +30,21 @@ function App() {
       .catch((error) => {
         setLoading(false);
         console.error("Error fetching data:", error);
+      });
+
+    axios
+      .get("/api/cart-items")
+      .then((response) => {
+        setCart(response.data);
+
+        const totalQuantity = response.data.reduce(
+          (total, item) => total + item.quantity,
+          0
+        );
+        setCartQuantity(totalQuantity);
+      })
+      .catch((error) => {
+        console.error("Error fetching cart items:", error);
       });
   }, []);
 
@@ -38,23 +59,6 @@ setProducts(data);
 loadData();
 }, []);
 */
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/api/cart-items")
-      .then((response) => {
-        setCart(response.data);
-
-        const totalQuantity = response.data.reduce(
-          (total, item) => total + item.quantity,
-          0
-        );
-        setCartQuantity(totalQuantity);
-      })
-      .catch((error) => {
-        console.error("Error fetching cart items:", error);
-      });
-  }, []);
 
   return (
     <Routes>

@@ -5,6 +5,19 @@ import DeliveryOptions from "./DeliveryOptions.jsx";
 import { getDeliveryDate } from "../utils/deliveryTime.js";
 import "./OrderSummary.css";
 
+/**
+ * Renders the summary of items in the shopping cart.
+ * It displays each item's details, allows for quantity updates, deletion,
+ * and selection of delivery options.
+ *
+ * @param {object} props - The component props.
+ * @param {Array<object>} props.cart - An array of cart item objects. Each object contains productId, quantity, and deliveryOptionId.
+ * @param {Function} props.setCart - The state setter function to update the cart.
+ * @param {Array<object>} props.allProducts - An array of all available product objects to look up product details.
+ * @param {Function} props.setCartQuantity - The state setter function to update the total quantity of items in the cart.
+ * @param {Array<object>} props.deliveryOption - An array of available delivery option objects.
+ * @returns {JSX.Element} The rendered order summary component.
+ */
 function OrderSummary({
   cart,
   setCart,
@@ -15,10 +28,9 @@ function OrderSummary({
   const quantityInputRef = useRef({});
   const [isPressed, setIsPressed] = useState({});
   
-
   function deleteCartItem(productId) {
     axios
-      .delete(`http://localhost:3000/api/cart-items/${productId}`)
+      .delete(`/api/cart-items/${productId}`)
       .then(() => {
         setCart((prev) => prev.filter((item) => item.productId !== productId));
 
@@ -26,42 +38,42 @@ function OrderSummary({
         cart.forEach((item) => {
           if (item.productId === productId) deleteCount = item.quantity;
         });
-        console.log(deleteCount);
+        //console.log(deleteCount);
         setCartQuantity((prev) => prev - deleteCount);
 
-        console.log("Deleted:", productId);
+        //console.log("Deleted:", productId);
       })
       .catch((error) => {
-        console.error("Error deleting:", error);
+      console.error("Error deleting:", error);
       });
   }
 
   function updateCartItem(productId) {
-    console.log("updating", productId);
+    //console.log("updating", productId);
     setIsPressed({ [productId]: true });
   }
   function saveCartItem(productId, cartItem) {
-    console.log("saving");
+    //console.log("saving");
     const rawValue = parseInt(quantityInputRef.current[productId].value, 10);
     if (!rawValue || rawValue < 1 || Number.isNaN(rawValue)) {
       quantityInputRef.current[productId].focus();
-      console.warn("Invalid Value!");
+      //console.warn("Invalid Value!");
       return;
     }
     const quantityChange = rawValue;
-    console.log(quantityChange);
+    //console.log(quantityChange);
 
     if (quantityChange === cartItem.quantity) {
-      console.log("Quantity unchanged");
+      //console.log("Quantity unchanged");
       setIsPressed({ [productId]: false });
       return;
     }
     axios
-      .put(`http://localhost:3000/api/cart-items/${productId}`, {
+      .put(`/api/cart-items/${productId}`, {
         quantity: quantityChange,
       })
       .then((response) => {
-        console.log(response.data);
+      console.log(response.data);
 
         // update cartQuantity correctly
         setCartQuantity((prev) => prev - cartItem.quantity + quantityChange);
@@ -92,7 +104,7 @@ function OrderSummary({
         if (!matchingProduct || !matchingOption) {
           return null; //skip render until data is ready
         }
-        // console.log(matchingProduct);
+        // //console.log(matchingProduct);
         const deliveryDate = getDeliveryDate(matchingOption.deliveryDays);
 
         return (

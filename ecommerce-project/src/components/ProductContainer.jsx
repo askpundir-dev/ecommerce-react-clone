@@ -2,6 +2,14 @@ import axios from "axios";
 import { useState, useRef } from "react";
 import "./ProductContainer.css";
 
+/**
+ * Renders a container for a list of products, allowing users to view and add them to the cart.
+ * @param {object} props - The component props.
+ * @param {Function} props.setCartQuantity - A state setter function to update the total quantity of items in the cart.
+ * @param {Array<object>} props.products - An array of product objects to be displayed.
+ * @param {Function} props.setCart - A state setter function to update the array of cart items.
+ * @returns {JSX.Element} A JSX fragment containing the rendered list of products.
+ */
 function ProductContainer({ setCartQuantity, products, setCart }) {
   // Ref for storing timeouts per product
   const addToCartTimeouts = useRef({});
@@ -21,7 +29,7 @@ function ProductContainer({ setCartQuantity, products, setCart }) {
 
     const selectedQuantity = selectedQuantities[productId] || 1;
     axios
-      .post("http://localhost:3000/api/cart-items", {
+      .post("/api/cart-items", {
         productId,
         quantity: selectedQuantity,
       })

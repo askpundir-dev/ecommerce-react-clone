@@ -1,6 +1,13 @@
 import { Link } from "react-router";
 import "./CheckoutHeader.css";
 
+/**
+ * Renders the header component for the checkout page.
+ * It displays the logo, a checkout status with the number of items, and a security icon.
+ * @param {object} props - The component props.
+ * @param {number} props.cartQuantity - The total number of items in the shopping cart.
+ * @returns {JSX.Element} The rendered checkout header component.
+ */
 function CheckoutHeader({cartQuantity}) {
 return (
   <>

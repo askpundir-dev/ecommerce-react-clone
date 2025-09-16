@@ -1,9 +1,17 @@
 import axios from "axios";
 import { getDeliveryDate } from "../utils/deliveryTime";
 
-function DeliveryOptions({ setCart, cartItem,deliveryOption }) {
- 
-
+/**
+ * Renders a list of delivery options for a specific cart item.
+ * Allows the user to select a delivery option, which updates the cart state.
+ *
+ * @param {object} props - The component props.
+ * @param {Function} props.setCart - The state setter function to update the cart.
+ * @param {object} props.cartItem - The specific item in the cart for which to display delivery options.
+ * @param {Array<object>} props.deliveryOption - An array of available delivery option objects.
+ * @returns {JSX.Element} A JSX fragment containing the rendered list of delivery options as radio buttons.
+ */
+function DeliveryOptions({ setCart, cartItem, deliveryOption }) {
   return (
     <>
       {deliveryOption.map((option) => {
@@ -23,10 +31,11 @@ function DeliveryOptions({ setCart, cartItem,deliveryOption }) {
                       : item
                   )
                 );
-                axios.put(`http://localhost:3000/api/cart-items/${cartItem.productId}`,{
-                 deliveryOptionId:option.id, 
-                }).then(response=>console.log(response.data)
-                )
+                axios
+                  .put(`/api/cart-items/${cartItem.productId}`, {
+                    deliveryOptionId: option.id,
+                  })
+                  .then((response) => console.log(response.data));
               }}
             />
             <div>
@@ -36,7 +45,7 @@ function DeliveryOptions({ setCart, cartItem,deliveryOption }) {
               <div className="delivery-option-price">
                 {option.priceCents === 0
                   ? "Free Shipping"
-                  : `$${(option.priceCents / 100).toFixed(2)} - Shipping`}
+                  : `${(option.priceCents / 100).toFixed(2)} - Shipping`}
               </div>
             </div>
           </div>

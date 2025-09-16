@@ -16,7 +16,7 @@ function CheckoutPage({
   const [deliveryOption, setDeliveryOption] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/delivery-options").then((response) => {
+    axios.get("/api/delivery-options").then((response) => {
       setDeliveryOption(response.data);
     }).catch(er=>console.warn(er.message));
   }, []);
@@ -42,7 +42,7 @@ function CheckoutPage({
             }
           }
           />
-          <PaymentSummary {...{ cartQuantity,cart,deliveryOption,allProducts }} />
+          <PaymentSummary {...{ cartQuantity,cart,deliveryOption,}} />
         </div>
       </div>
     </>

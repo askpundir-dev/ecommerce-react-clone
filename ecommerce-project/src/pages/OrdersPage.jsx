@@ -2,6 +2,11 @@ import { Link } from "react-router";
 import Header from "../components/Header";
 import './OrdersPage.css';
 
+/**
+ * Renders the Orders page which displays the user's past orders.
+ * This component does not take any props.
+ * @returns {JSX.Element} The JSX code for the orders page, including the header and a grid of orders.
+ */
 function OrdersPage() {
   document.title = "Orders";
   return (
