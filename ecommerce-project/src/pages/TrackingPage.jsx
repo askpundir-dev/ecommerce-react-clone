@@ -2,11 +2,11 @@ import "./TrackingPage.css";
 import Header from "../components/Header";
 import { Link } from "react-router";
 
-function TrackingPage() {
+function TrackingPage({cart}) {
   document.title = "Order Tracking";
   return (
     <>
-      <Header />
+      <Header cart={cart} />
 
     <div className="tracking-page">
       <div className="order-tracking">

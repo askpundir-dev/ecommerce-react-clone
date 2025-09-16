@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
-import { /*calculateCartSummary*/ formatMoney } from "../utils/cartSummary";
+import { /*calculateCartSummary*/ formatMoney } from "../utils/money";
 import styles from "./PaymentSummary.module.css";
-function PaymentSummary({ cart, deliveryOption }) {
-  const [paymentSummary, setPaymentSummary] = useState({});
+function PaymentSummary({ cart, deliveryOptions }) {
+  const [paymentSummary, setPaymentSummary] = useState(null);
   useEffect(() => {
     axios
       .get("/api/payment-summary")
@@ -13,19 +13,14 @@ function PaymentSummary({ cart, deliveryOption }) {
         setPaymentSummary(response.data);
       })
       .catch((err) => console.warn(err.message));
-  }, [cart, deliveryOption]);
+  }, [cart, deliveryOptions]);
   const navigate = useNavigate();
 
-  if (!Object.keys(paymentSummary).length) {
-    return (
-      <div className={styles["loading-body-styles"]}>
-        <div className={styles.spinner}></div>
-        <p className={styles["loading-text"]}>Loading...</p>
-      </div>
-    );
+  if (!paymentSummary) {
+   return null
   }
 
-  console.log(paymentSummary);
+ // console.log(paymentSummary);
   const {
     totalItems,
     productCostCents,
@@ -34,9 +29,7 @@ function PaymentSummary({ cart, deliveryOption }) {
     taxCents,
     totalCostCents,
   } = paymentSummary;
-  console.log(totalItems);
-
-  // const summary = calculateCartSummary(cart, allProducts, deliveryOption);
+  //console.log(totalItems);
 
   function placeOrder() {
     console.log("placing-order");

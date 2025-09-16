@@ -8,7 +8,7 @@ import "./CheckoutHeader.css";
  * @param {number} props.cartQuantity - The total number of items in the shopping cart.
  * @returns {JSX.Element} The rendered checkout header component.
  */
-function CheckoutHeader({cartQuantity}) {
+function CheckoutHeader({cart}) {
 return (
   <>
     <div className="checkout-header">
@@ -23,7 +23,7 @@ return (
           <div className="checkout-header-middle-section">
             Checkout (
             <Link to="/" className="return-to-home-link" >
-             {cartQuantity}
+             {cart.reduce((total,curr)=>total+curr.quantity,0)}
             </Link>
             )
           </div>

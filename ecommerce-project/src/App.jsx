@@ -14,7 +14,7 @@ import "./App.css";
  */
 function App() {
   const [cart, setCart] = useState([]);
-  const [cartQuantity, setCartQuantity] = useState(0);
+ 
   const [allProducts, setAllProducts] = useState([]);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -31,17 +31,13 @@ function App() {
         setLoading(false);
         console.error("Error fetching data:", error);
       });
+  }, []);
+  useEffect(() => {
 
     axios
-      .get("/api/cart-items")
+      .get("/api/cart-items?expand=product")
       .then((response) => {
         setCart(response.data);
-
-        const totalQuantity = response.data.reduce(
-          (total, item) => total + item.quantity,
-          0
-        );
-        setCartQuantity(totalQuantity);
       })
       .catch((error) => {
         console.error("Error fetching cart items:", error);
@@ -67,8 +63,7 @@ loadData();
         element={
           <HomePage
             {...{
-              cartQuantity,
-              setCartQuantity,
+              cart,
               setCart,
               products,
               setProducts,
@@ -82,12 +77,12 @@ loadData();
         path="checkout"
         element={
           <CheckoutPage
-            {...{ cart, setCart, allProducts, cartQuantity, setCartQuantity }}
+            {...{  cart, setCart, loading }}
           />
         }
       />
-      <Route path="orders" element={<OrdersPage />} />
-      <Route path="tracking" element={<TrackingPage />} />
+      <Route path="orders" element={<OrdersPage {...{ cart }} />} />
+      <Route path="tracking" element={<TrackingPage {...{cart}} />} />
     </Routes>
   );
 }

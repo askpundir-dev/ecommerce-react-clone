@@ -3,7 +3,7 @@ import { useRef } from "react";
 import searchProducts from "../utils/searchProducts"; 
 import "./header.css";
 
-function Header({ cartQuantity, products,setProducts,allProducts }) {
+function Header({ cart, products,setProducts,allProducts }) {
   const searchProductsRef = useRef(null);
   // console.log(products);
   return (
@@ -47,7 +47,7 @@ function Header({ cartQuantity, products,setProducts,allProducts }) {
 
           <Link to="/checkout" className="cart-link header-link">
             <img className="cart-icon" src="images/icons/cart-icon.png" />
-            <div className="cart-quantity">{cartQuantity}</div>
+            <div className="cart-quantity">{cart.reduce((acc,cur)=>acc+=cur.quantity,0)}</div>
             <div className="cart-text">Cart</div>
           </Link>
         </div>

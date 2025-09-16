@@ -10,10 +10,12 @@ import "./ProductContainer.css";
  * @param {Function} props.setCart - A state setter function to update the array of cart items.
  * @returns {JSX.Element} A JSX fragment containing the rendered list of products.
  */
-function ProductContainer({ setCartQuantity, products, setCart }) {
+function ProductContainer({ products, setCart, cart }) {
   // Ref for storing timeouts per product
   const addToCartTimeouts = useRef({});
   const [selectedQuantities, setSelectedQuantities] = useState({});
+  console.log(selectedQuantities);
+  console.log(cart);
 
   const [showAddToCartMessage, setShowAddToCartMessage] = useState({});
 
@@ -35,26 +37,30 @@ function ProductContainer({ setCartQuantity, products, setCart }) {
       })
       .then((response) => {
         console.log(response.data);
-         const newCartItem = response.data; // backend should return the new/updated cart item
+        const newCartItem = response.data; // backend returns the new/updated cart item
 
-        setCartQuantity((prevQuantity) => prevQuantity + selectedQuantity);
-
-       // ✅ Update cart in App state
-      setCart((prevCart) => {
-        const existingItem = prevCart.find(item => item.productId === productId);
-
-        if (existingItem) {
-          // if item already in cart, update its quantity
-          return prevCart.map(item =>
-            item.productId === productId
-              ? { ...item, quantity: item.quantity + selectedQuantity }
-              : item
+        // ✅ Update cart in App state
+        setCart((prevCart) => {
+          const existingItem = prevCart.find(
+            (item) => item.productId === newCartItem.productId
           );
-        } else {
-          // new product added
-          return [...prevCart, newCartItem];
-        }
-      });
+
+          if (existingItem) {
+            // if item already in cart, update its quantity
+
+            return prevCart.map((item) =>
+              item.productId === newCartItem.productId
+                ? { ...item, quantity: newCartItem.quantity }
+                : item
+            );
+          } else {
+            // new product added
+            const product = products.find(
+              (product) => product.id === newCartItem.productId
+            );
+            return [...prevCart, { ...newCartItem, product: product }];
+          }
+        });
 
         // Reset quantity to 1 after adding to cart
         setSelectedQuantities(() => {
@@ -79,6 +85,8 @@ function ProductContainer({ setCartQuantity, products, setCart }) {
         return;
       });
   }
+
+  //i dont understand this part of the code
   function handelProductQuantityChange(e, productId) {
     if (!productId) return;
     const quantity = parseInt(e.target.value);
