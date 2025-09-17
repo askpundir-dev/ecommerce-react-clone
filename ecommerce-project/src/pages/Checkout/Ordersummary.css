@@ -1,26 +1,17 @@
-
-
-
-
-
-
-
-
-
-.quantity-input{
+.quantity-input {
   width: 50px;
   font-size: 16px;
   display: none;
 }
-.save-quantity-link{
+.save-quantity-link {
   color: rgb(25, 135, 84);
   display: none;
 }
 
-.js-display-save-and-input{
+.js-display-save-and-input {
   display: initial;
 }
 /* hide update button and quantityLabel */
-.js-hidden{     
+.js-hidden {
   display: none;
 }

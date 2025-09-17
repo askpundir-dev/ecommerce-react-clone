@@ -1,6 +1,6 @@
 import axios from "axios";
 import dayjs from "dayjs";
-import { formatMoney } from "../utils/money";
+import { formatMoney } from "../../utils/money";
 
 /**
  * Renders a list of delivery options for a specific cart item.

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router";
 import axios from "axios";
-import HomePage from "./pages/HomePage";
-import CheckoutPage from "./pages/CheckoutPage";
+import HomePage from "./pages/Home/HomePage.jsx";
+import CheckoutPage from "./pages/Checkout/CheckoutPage.jsx";
 import OrdersPage from "./pages/OrdersPage";
 import TrackingPage from "./pages/TrackingPage";
 import "./App.css";
@@ -19,30 +19,24 @@ function App() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   // USING AXIOS FOR data fetching no need of error handling here as axios has it inbuilt
-  useEffect(() => {
-    axios
-      .get("/api/products")
-      .then((response) => {
-        setAllProducts(response.data);
-        setProducts(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.error("Error fetching data:", error);
-      });
-  }, []);
-  useEffect(() => {
+useEffect(() => {
+  setLoading(true);
 
-    axios
-      .get("/api/cart-items?expand=product")
-      .then((response) => {
-        setCart(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching cart items:", error);
-      });
-  }, []);
+  Promise.all([
+    axios.get("/api/products"),
+    axios.get("/api/cart-items?expand=product")
+  ])
+    .then(([productsRes, cartRes]) => {
+      setAllProducts(productsRes.data);
+      setProducts(productsRes.data);
+      setCart(cartRes.data);
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+      setLoading(false);
+    });
+}, []);
 
   /*
 // USING ASYNC AWAIT data fetching THIS ALSO NEEDS ERROR HANDLING

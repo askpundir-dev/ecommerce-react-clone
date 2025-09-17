@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useRef } from "react";
+import { formatMoney } from "../../utils/money";
 import "./ProductContainer.css";
 
 /**
@@ -86,7 +87,7 @@ function ProductContainer({ products, setCart, cart }) {
       });
   }
 
-  //i dont understand this part of the code
+  //i don't understand this part of the code
   function handelProductQuantityChange(e, productId) {
     if (!productId) return;
     const quantity = parseInt(e.target.value);
@@ -118,7 +119,7 @@ function ProductContainer({ products, setCart, cart }) {
           </div>
 
           <div className="product-price">
-            ${(product.priceCents / 100).toFixed(2)}
+            {formatMoney(product.priceCents)}
           </div>
 
           <div className="product-quantity-container">

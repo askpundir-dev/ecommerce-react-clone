@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
-import { /*calculateCartSummary*/ formatMoney } from "../utils/money";
+import { /*calculateCartSummary*/ formatMoney } from "../../utils/money";
 import styles from "./PaymentSummary.module.css";
-function PaymentSummary({ cart, deliveryOptions }) {
+function PaymentSummary({ cart, setCart }) {
   const [paymentSummary, setPaymentSummary] = useState(null);
   useEffect(() => {
     axios
@@ -13,14 +13,14 @@ function PaymentSummary({ cart, deliveryOptions }) {
         setPaymentSummary(response.data);
       })
       .catch((err) => console.warn(err.message));
-  }, [cart, deliveryOptions]);
+  }, [cart]);
   const navigate = useNavigate();
 
   if (!paymentSummary) {
-   return null
+    return null;
   }
 
- // console.log(paymentSummary);
+  // console.log(paymentSummary);
   const {
     totalItems,
     productCostCents,
@@ -34,7 +34,26 @@ function PaymentSummary({ cart, deliveryOptions }) {
   function placeOrder() {
     console.log("placing-order");
     axios.post("/api/orders").then((response) => {
-      console.log(response.data); // backend should return the order details with order id and other relevant info
+      console.log(response.data);
+      const orderDetails = response.data;
+      console.log(orderDetails.products);
+      // this is dependent on the backend implementation, here we just remove the items from the cart
+      // *1. Remove items from the cart based on the order details
+      /*
+      setCart((prevCart) => {
+        return prevCart.filter((item) => {
+          // keep only items NOT in the order
+          return !orderDetails.products.find(
+            (product) => product.productId === item.productId
+          );
+        });
+      });
+      */
+      // *2: remove items directly resetting the cart
+      setCart([]);
+
+      // *3: refetch the cart to reflect the changes
+
       navigate("/orders");
     });
   }

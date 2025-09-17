@@ -1,6 +1,6 @@
-import Header from "../components/Header";
-import ProductContainer from "../components/ProductContainer.jsx";
-import NoResults from "../components/NoResults.jsx";
+import Header from "../../components/Header";
+import ProductContainer from "./ProductContainer.jsx";
+import NoResults from "../../components/NoResults.jsx";
 import "./homepage.css";
 
 /**

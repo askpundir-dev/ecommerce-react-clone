@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import CheckoutHeader from "../components/CheckoutHeader.jsx";
-import OrderSummary from "../components/OrderSummary.jsx";
-import PaymentSummary from "../components/PaymentSummary.jsx";
+import {Link} from "react-router";
+import CheckoutHeader from "./CheckoutHeader.jsx";
+import OrderSummary from "./OrderSummary.jsx";
+import PaymentSummary from "./PaymentSummary.jsx";
 import "./CheckoutPage.css";
 
 function CheckoutPage({
@@ -35,10 +36,10 @@ function CheckoutPage({
   return (
     <>
       <title>Checkout</title>
-      <CheckoutHeader {...{ cart}} />
+      <CheckoutHeader {...{ cart }} />
 
       <div className="checkout-page">
-        <div className="page-title">Review your order</div>
+        {cart.length > 0 && <div className="page-title">Review your order</div>}
 
         <div className="checkout-grid">
           {cart.length > 0 ? (
@@ -52,10 +53,15 @@ function CheckoutPage({
               }}
             />
           ) : (
-            <div className="empty-cart-message">Your cart is empty.</div>
+            <div className="empty-cart-message-container">
+              <div className="empty-cart-message">Your cart is empty.</div>
+              <Link to="/" className="browse-products-btn">Browse Products</Link>
+            </div>
           )}
 
-          <PaymentSummary {...{ cartQuantity, cart, deliveryOptions }} />
+          <PaymentSummary
+            {...{ cartQuantity, cart, deliveryOptions, setCart }}
+          />
         </div>
       </div>
     </>

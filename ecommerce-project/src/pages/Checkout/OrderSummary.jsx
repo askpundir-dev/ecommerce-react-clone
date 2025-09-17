@@ -1,9 +1,9 @@
 import { useState, useRef} from "react";
 import axios from "axios";
 import dayjs from "dayjs";
-import { formatMoney } from "../utils/money.js";
+import { formatMoney } from "../../utils/money.js";
 import DeliveryOptions from "./DeliveryOptions.jsx";
-import  updateCartItemInState from "../utils/updateCartItemQuantity.js";
+import  updateCartItemInState from "../../utils/updateCartItemQuantity.js";
 import "./OrderSummary.css";
 
 /**
