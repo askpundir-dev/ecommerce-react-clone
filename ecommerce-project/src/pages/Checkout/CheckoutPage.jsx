@@ -1,18 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import {Link} from "react-router";
+import { Link } from "react-router";
 import CheckoutHeader from "./CheckoutHeader.jsx";
 import OrderSummary from "./OrderSummary.jsx";
 import PaymentSummary from "./PaymentSummary.jsx";
 import "./CheckoutPage.css";
 
-function CheckoutPage({
-  cartQuantity,
-  setCartQuantity,
-  setCart,
-  cart,
-  loading,
-}) {
+function CheckoutPage({ cart, setCart, loading, allProducts, setProducts }) {
   const [deliveryOptions, setDeliveryOptions] = useState([]);
   useEffect(() => {
     axios
@@ -47,21 +41,26 @@ function CheckoutPage({
               {...{
                 cart,
                 setCart,
-                cartQuantity,
-                setCartQuantity,
                 deliveryOptions,
               }}
             />
           ) : (
             <div className="empty-cart-message-container">
               <div className="empty-cart-message">Your cart is empty.</div>
-              <Link to="/" className="browse-products-btn">Browse Products</Link>
+              <Link
+                to="/"
+                className="browse-products-btn"
+                onClick={() => {
+                  console.log("setting All Products..");
+                  setProducts(allProducts);
+                }}
+              >
+                Browse Products
+              </Link>
             </div>
           )}
 
-          <PaymentSummary
-            {...{ cartQuantity, cart, deliveryOptions, setCart }}
-          />
+          <PaymentSummary {...{ cart, deliveryOptions, setCart }} />
         </div>
       </div>
     </>

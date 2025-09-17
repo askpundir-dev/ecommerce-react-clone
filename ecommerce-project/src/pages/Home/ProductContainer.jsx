@@ -20,6 +20,7 @@ function ProductContainer({ products, setCart, cart }) {
 
   const [showAddToCartMessage, setShowAddToCartMessage] = useState({});
 
+  //using promise .then to handle the promise response
   function addToCart(productId) {
     console.warn("Adding to cart:", productId);
 
@@ -92,7 +93,7 @@ function ProductContainer({ products, setCart, cart }) {
     if (!productId) return;
     const quantity = parseInt(e.target.value);
     setSelectedQuantities(() => {
-      return { e, [productId]: quantity };
+      return {[productId]: quantity };
     });
   }
 
