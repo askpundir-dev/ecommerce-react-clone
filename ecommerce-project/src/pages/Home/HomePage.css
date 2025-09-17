@@ -2,91 +2,25 @@
   margin-top: 60px;
 }
 
-.home-page .products-grid {
-  display: grid;
-  /* - In CSS Grid, 1fr means a column will take up the
-       remaining space in the grid.
-     - If we write 1fr 1fr ... 1fr; 8 times, this will
-       divide the grid into 8 columns, each taking up an
-       equal amount of the space.
-     - repeat(8, 1fr); is a shortcut for repeating "1fr"
-       8 times (instead of typing out "1fr" 8 times).
-       repeat(...) is a special property that works with
-       display: grid; */
-  grid-template-columns: repeat(8, 1fr);
-}
-
-/* @media is used to create responsive design (making the
-   website look good on any screen size). This @media
-   means when the screen width is 2000px or less, we
-   will divide the grid into 7 columns instead of 8. */
-@media (max-width: 2000px) {
-  .home-page .products-grid {
-    grid-template-columns: repeat(7, 1fr);
-  }
-}
-
-/* This @media means when the screen width is 1600px or
-   less, we will divide the grid into 6 columns. */
-@media (max-width: 1600px) {
-  .home-page .products-grid {
-    grid-template-columns: repeat(6, 1fr);
-  }
-}
-
-@media (max-width: 1300px) {
-  .home-page .products-grid {
-    grid-template-columns: repeat(5, 1fr);
-  }
-}
-
-@media (max-width: 1000px) {
-  .home-page .products-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media (max-width: 800px) {
-  .home-page .products-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 575px) {
-  .home-page .products-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 450px) {
-  .home-page .products-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 .loading-body-styles {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%; /* full screen center */
-  width: 100%;
-  background: white;
-  
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .spinner {
   width: 50px;
   height: 50px;
   border: 5px solid #ddd;
-  border-top: 5px solid rgb(25, 135, 84); 
+  border-top: 5px solid rgb(25, 135, 84);
   border-radius: 50%;
   animation: spin 650ms linear infinite;
   margin-bottom: 15px;
 }
 
 @keyframes spin {
-  0%{
+  0% {
     transform: rotate(0deg);
   }
   100% {
@@ -95,21 +29,8 @@
 }
 
 .loading-text {
-  position: relative;
-  left: 0.5rem;
   font-size: 18px;
   font-weight: 500;
   align-self: center;
   color: rgb(25, 135, 84);
 }
-
-
-.products-grid.is-empty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 80vh; 
-  min-height: 70vh;         
-  overflow: hidden;
-}
-

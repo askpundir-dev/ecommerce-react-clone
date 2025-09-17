@@ -1,5 +1,4 @@
 import Product from "./Product.jsx";
-import { Fragment } from "react";
 import "./ProductContainer.css";
 
 function ProductContainer({ products, setCart }) {

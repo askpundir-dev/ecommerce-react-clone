@@ -1,6 +1,6 @@
-import './NoResults.css';
+import "./NoResults.css";
 
-function NoResults({setProducts,allProducts}) {
+function NoResults({ setProducts, allProducts }) {
   return (
     <>
       <div className="no-results">
@@ -16,7 +16,7 @@ function NoResults({setProducts,allProducts}) {
           className="no-results-btn"
           onClick={() => {
             // window.location.href = "/";
-          setProducts(allProducts);
+            setProducts(allProducts);
           }}
         >
           Go back to all products

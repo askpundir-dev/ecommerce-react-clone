@@ -4,13 +4,12 @@ import { formatMoney } from "../../utils/money";
 function Product({ product, setCart, products }) {
   const [quantity, setQuantity] = useState(1);
   const [showAddedMessage, setShowAddedMessage] = useState(false);
-  let messageTimeoutId=useRef(null);
-  
-  
+  let messageTimeoutId = useRef(null);
+
   //using promise .then to handle the promise response
   function addToCart(productId) {
     console.warn("Adding to cart:", productId);
-console.log(messageTimeoutId.current);
+    console.log(messageTimeoutId.current);
     if (!productId) {
       console.error("Product ID is missing");
       return;
@@ -59,7 +58,7 @@ console.log(messageTimeoutId.current);
           setShowAddedMessage(false);
         }, 1500); // Hide message after 1.5 seconds
 
-         console.log(messageTimeoutId);
+        console.log(messageTimeoutId);
       })
       .catch((err) => {
         console.log(err.message);
