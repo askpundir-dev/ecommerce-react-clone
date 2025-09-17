@@ -15,9 +15,14 @@ import "./homepage.css";
  * @param {function} props.setCart - Function to update the cart's contents.
  * @returns {JSX.Element} The JSX for the home page, which includes a header and a product container. It shows a loading indicator while data is being fetched or a "No Results" component if the products list is empty.
  */
-function HomePage({ products, setProducts, allProducts, loading, cart,setCart }) {
- 
-
+function HomePage({
+  products,
+  setProducts,
+  allProducts,
+  loading,
+  cart,
+  setCart,
+}) {
   //if i don't want to show loading
   // if (loading) {
   //   return null;
@@ -35,7 +40,7 @@ function HomePage({ products, setProducts, allProducts, loading, cart,setCart })
   //shorthand syntax method  for passing props
   return (
     <>
-    <title>Home</title>
+      <title>Home</title>
       <Header {...{ cart, products, setProducts, allProducts }} />
 
       <div className="home-page">

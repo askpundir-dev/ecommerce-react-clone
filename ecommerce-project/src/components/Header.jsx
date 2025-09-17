@@ -1,10 +1,13 @@
-import { Link } from "react-router";
-import { useRef } from "react";
-import searchProducts from "../utils/searchProducts"; 
+import { Link,useNavigate} from "react-router";
+import { useRef} from "react";
+import searchProducts from "../utils/searchProducts.js";
 import "./header.css";
 
-function Header({ cart, products,setProducts,allProducts }) {
+function Header({ cart, products, setProducts, allProducts }) {
   const searchProductsRef = useRef(null);
+   
+  const navigate = useNavigate();
+ 
   // console.log(products);
   return (
     <>
@@ -25,17 +28,32 @@ function Header({ cart, products,setProducts,allProducts }) {
             className="search-bar"
             type="text"
             placeholder="Search"
-            onKeyDown={(e)=>{
-              if(e.key==="Enter"){
-                 searchProducts({products,searchProductsRef,allProducts,setProducts});
-                 e.target.blur();
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                navigate('/');
+                searchProducts({
+                  products,
+                  searchProductsRef,
+                  allProducts,
+                  setProducts,
+                });
+                e.target.blur();
               }
             }}
           />
 
-          <button className="search-button" onClick={()=>{
-         searchProducts({products,searchProductsRef,allProducts,setProducts})
-          }}>
+          <button
+            className="search-button"
+            onClick={() => {
+              navigate('/');
+              searchProducts({
+                products,
+                searchProductsRef,
+                allProducts,
+                setProducts,
+              });
+            }}
+          >
             <img className="search-icon" src="images/icons/search-icon.png" />
           </button>
         </div>
@@ -47,7 +65,9 @@ function Header({ cart, products,setProducts,allProducts }) {
 
           <Link to="/checkout" className="cart-link header-link">
             <img className="cart-icon" src="images/icons/cart-icon.png" />
-            <div className="cart-quantity">{cart.reduce((acc,cur)=>acc+=cur.quantity,0)}</div>
+            <div className="cart-quantity">
+              {cart.reduce((acc, cur) => (acc += cur.quantity), 0)}
+            </div>
             <div className="cart-text">Cart</div>
           </Link>
         </div>

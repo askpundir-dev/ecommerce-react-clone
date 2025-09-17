@@ -3,8 +3,8 @@ import { Routes, Route } from "react-router";
 import axios from "axios";
 import HomePage from "./pages/Home/HomePage.jsx";
 import CheckoutPage from "./pages/Checkout/CheckoutPage.jsx";
-import OrdersPage from "./pages/OrdersPage";
-import TrackingPage from "./pages/TrackingPage";
+import OrdersPage from "./pages/Orders/OrdersPage.jsx";
+import TrackingPage from "./pages/Tracking/TrackingPage.jsx";
 import "./App.css";
 /**
  * The main application component.
@@ -14,29 +14,29 @@ import "./App.css";
  */
 function App() {
   const [cart, setCart] = useState([]);
- 
+
   const [allProducts, setAllProducts] = useState([]);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   // USING AXIOS FOR data fetching no need of error handling here as axios has it inbuilt
-useEffect(() => {
-  setLoading(true);
+  useEffect(() => {
+    setLoading(true);
 
-  Promise.all([
-    axios.get("/api/products"),
-    axios.get("/api/cart-items?expand=product")
-  ])
-    .then(([productsRes, cartRes]) => {
-      setAllProducts(productsRes.data);
-      setProducts(productsRes.data);
-      setCart(cartRes.data);
-      setLoading(false);
-    })
-    .catch((error) => {
-      console.error("Error fetching data:", error);
-      setLoading(false);
-    });
-}, []);
+    Promise.all([
+      axios.get("/api/products"),
+      axios.get("/api/cart-items?expand=product"),
+    ])
+      .then(([productsRes, cartRes]) => {
+        setAllProducts(productsRes.data);
+        setProducts(productsRes.data);
+        setCart(cartRes.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      });
+  }, []);
 
   /*
 // USING ASYNC AWAIT data fetching THIS ALSO NEEDS ERROR HANDLING
@@ -69,14 +69,15 @@ loadData();
       />
       <Route
         path="checkout"
+        element={<CheckoutPage {...{ cart, setCart, loading }} />}
+      />
+      <Route path="orders" element={<OrdersPage {...{ cart, products, setProducts, allProducts }} />} />
+      <Route
+        path="tracking"
         element={
-          <CheckoutPage
-            {...{  cart, setCart, loading }}
-          />
+          <TrackingPage {...{ cart, products, setProducts, allProducts }} />
         }
       />
-      <Route path="orders" element={<OrdersPage {...{ cart }} />} />
-      <Route path="tracking" element={<TrackingPage {...{cart}} />} />
     </Routes>
   );
 }

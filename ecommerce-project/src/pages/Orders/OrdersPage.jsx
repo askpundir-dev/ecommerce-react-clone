@@ -1,18 +1,17 @@
 import { Link } from "react-router";
 import dayjs from "dayjs";
 import axios from "axios";
-import { useState, useEffect,Fragment } from "react";
-import Header from "../components/Header";
+import { useState, useEffect, Fragment } from "react";
+import Header from "../../components/Header";
+import { formatMoney } from "../../utils/money";
 
 import "./OrdersPage.css";
-import { formatMoney } from "../utils/money";
-
 /**
  * Renders the Orders page which displays the user's past orders.
  * This component does not take any props.
  * @returns {JSX.Element} The JSX code for the orders page, including the header and a grid of orders.
  */
-function OrdersPage({ cart }) {
+function OrdersPage( { cart, products, setProducts, allProducts }) {                          
   const [orders, setOrders] = useState([]);
   useEffect(() => {
     axios.get("/api/orders?expand=products").then((response) => {
@@ -24,7 +23,7 @@ function OrdersPage({ cart }) {
   return (
     <>
       <title>Orders</title>
-      <Header cart={cart} />
+      <Header {... { cart, products, setProducts, allProducts }} />
 
       <div className="orders-page">
         <div className="page-title">Your Orders</div>
@@ -61,12 +60,17 @@ function OrdersPage({ cart }) {
 
                         <div className="product-details">
                           <div className="product-name">
-                           {ordered.product.name}
+                            {ordered.product.name}
                           </div>
                           <div className="product-delivery-date">
-                            Arriving on: {dayjs(ordered.estimatedDeliveryTimeMs).format("MMMM D")}
+                            Arriving on:{" "}
+                            {dayjs(ordered.estimatedDeliveryTimeMs).format(
+                              "MMMM D"
+                            )}
                           </div>
-                          <div className="product-quantity">Quantity: {ordered.quantity}</div>
+                          <div className="product-quantity">
+                            Quantity: {ordered.quantity}
+                          </div>
                           <button className="buy-again-button button-primary">
                             <img
                               className="buy-again-icon"

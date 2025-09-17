@@ -118,9 +118,7 @@ function ProductContainer({ products, setCart, cart }) {
             </div>
           </div>
 
-          <div className="product-price">
-            {formatMoney(product.priceCents)}
-          </div>
+          <div className="product-price">{formatMoney(product.priceCents)}</div>
 
           <div className="product-quantity-container">
             <select
