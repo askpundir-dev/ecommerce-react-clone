@@ -2,16 +2,7 @@ import axios from "axios";
 import dayjs from "dayjs";
 import { formatMoney } from "../../utils/money";
 
-/**
- * Renders a list of delivery options for a specific cart item.
- * Allows the user to select a delivery option, which updates the cart state.
- *
- * @param {object} props - The component props.
- * @param {Function} props.setCart - The state setter function to update the cart.
- * @param {object} props.cartItem - The specific item in the cart for which to display delivery options.
- * @param {Array<object>} props.deliveryOption - An array of available delivery option objects.
- * @returns {JSX.Element} A JSX fragment containing the rendered list of delivery options as radio buttons.
- */
+
 function DeliveryOptions({ setCart, cartItem, deliveryOptions }) {
   return deliveryOptions.map((option) => {
     return (

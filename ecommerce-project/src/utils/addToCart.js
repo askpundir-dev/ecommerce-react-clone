@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-async function addToCart(productId,quantity=1, setCart, products) {
+async function addToCart({productId,quantity=1, setCart, products,fetchCart}) {
     console.warn("Adding to cart:", productId);
 
     if (!productId) {
@@ -39,18 +39,13 @@ async function addToCart(productId,quantity=1, setCart, products) {
         }
       });
 
-      // Reset quantity after adding
-      setQuantity(1);
-
-      clearTimeout(messageTimeoutId.current);
-      setShowAddedMessage(true);
-      messageTimeoutId.current = setTimeout(() => {
-        setShowAddedMessage(false);
-      }, 1500);
     } catch (err) {
       console.error("Add to cart failed:", err.message);
 
       // ✅ Only refetch on error
       await fetchCart();
     }
+  return 1;
   }
+
+  export default addToCart;

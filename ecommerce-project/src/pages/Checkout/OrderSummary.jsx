@@ -1,23 +1,21 @@
-import { useState, useRef} from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
 import { formatMoney } from "../../utils/money.js";
 import DeliveryOptions from "./DeliveryOptions.jsx";
-import  updateCartItemInState from "../../utils/updateCartItemQuantity.js";
+import updateCartItemInState from "../../utils/updateCartItemQuantity.js";
 import "./OrderSummary.css";
 
 /**
- * Renders the summary of items in the shopping cart.
- * It displays each item's details, allows for quantity updates, deletion,
- * and selection of delivery options.
+ * Renders the order summary section of the checkout page.
+ * It displays each item in the cart, providing functionality to update quantity,
+ * delete items, and select delivery options.
  *
  * @param {object} props - The component props.
- * @param {Array<object>} props.cart - An array of cart item objects. Each object contains productId, quantity, and deliveryOptionId.
+ * @param {Array<object>} props.cart - An array of objects, where each object represents an item in the cart.
  * @param {Function} props.setCart - The state setter function to update the cart.
- * @param {Array<object>} props.allProducts - An array of all available product objects to look up product details.
- * @param {Function} props.setCartQuantity - The state setter function to update the total quantity of items in the cart.
- * @param {Array<object>} props.deliveryOption - An array of available delivery option objects.
- * @returns {JSX.Element} The rendered order summary component.
+ * @param {Array<object>} props.deliveryOptions - An array of available delivery option objects.
+ * @returns {JSX.Element} A React component that renders the list of cart items and their details.
  */
 function OrderSummary({ cart, setCart, deliveryOptions }) {
   const quantityInputRef = useRef({});
@@ -27,9 +25,8 @@ function OrderSummary({ cart, setCart, deliveryOptions }) {
       .delete(`/api/cart-items/${productId}`)
       .then((response) => {
         console.log(response.data);
-        
-        setCart((prev) => prev.filter((item) => item.productId !== productId));
 
+        setCart((prev) => prev.filter((item) => item.productId !== productId));
       })
       .catch((error) => {
         console.error("Error deleting:", error);
@@ -41,12 +38,12 @@ function OrderSummary({ cart, setCart, deliveryOptions }) {
     setIsPressed({ [productId]: true });
   }
 
-   function saveCartItem(productId, cartItem) {
+  function saveCartItem(productId, cartItem) {
     //console.log("saving");
-    const rawValue = parseInt(quantityInputRef.current[productId].value,10);
+    const rawValue = parseInt(quantityInputRef.current[productId].value, 10);
     if (!rawValue || rawValue < 1 || Number.isNaN(rawValue)) {
       quantityInputRef.current[productId].focus();
-   console.warn("Invalid Value!");
+      console.warn("Invalid Value!");
       return;
     }
     const quantityChange = rawValue;
@@ -65,10 +62,11 @@ function OrderSummary({ cart, setCart, deliveryOptions }) {
         console.log(response.data);
 
         const updatedItem = response.data;
-    setCart((prev) => updateCartItemInState(prev, updatedItem));
+        setCart((prev) => updateCartItemInState(prev, updatedItem));
 
         setIsPressed({ [productId]: false });
-      }).catch((err) => console.error("Error updating cart:", err));
+      })
+      .catch((err) => console.error("Error updating cart:", err));
   }
 
   return (

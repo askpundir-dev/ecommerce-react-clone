@@ -7,6 +7,11 @@ import OrdersPage from "./pages/Orders/OrdersPage.jsx";
 import TrackingPage from "./pages/Tracking/TrackingPage.jsx";
 import "./App.css";
 
+/**
+ * The main application component. It manages the state for the cart, products,
+ * and loading status, and sets up the routing for the different pages of the e-commerce site.
+ * @returns {JSX.Element} The rendered application with its routes.
+ */
 function App() {
   const [cart, setCart] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
@@ -82,6 +87,7 @@ function App() {
           <OrdersPage
             {...{
               cart,
+              setCart,
               products,
               setProducts,
               allProducts,
