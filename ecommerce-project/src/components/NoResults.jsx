@@ -15,8 +15,7 @@ function NoResults({ setProducts, allProducts }) {
         <button
           className="no-results-btn"
           onClick={() => {
-            // window.location.href = "/";
-            setProducts(allProducts);
+           setProducts(allProducts);
           }}
         >
           Go back to all products

@@ -23,12 +23,14 @@ function HomePage({
   loading,
   cart,
   setCart,
+  fetchCart,
+  fetchProducts
   }) 
-{
+{  
   return (
     <>
       <title>Home</title>
-      <Header {...{ cart, products, setProducts, allProducts }} />
+      <Header {...{ cart, products, setProducts, allProducts, fetchCart,fetchProducts }} />
       {
       loading ? 
       (
@@ -44,7 +46,7 @@ function HomePage({
           products.length ? 
           (
             <ProductsGrid
-              {...{ products, cart, setCart, setProducts, allProducts }}
+              {...{ products, cart, setCart, setProducts, allProducts,fetchCart }}
             />
           ) : (
             <NoResults {...{ setProducts, allProducts }} />

@@ -3,7 +3,7 @@ import { useRef} from "react";
 import searchProducts from "../utils/searchProducts.js";
 import "./header.css";
 
-function Header({ cart, products, setProducts, allProducts }) {
+function Header({ cart, products, setProducts, allProducts,fetchCart,fetchProducts }) {
   const searchProductsRef = useRef(null);
    
   const navigate = useNavigate();
@@ -13,7 +13,11 @@ function Header({ cart, products, setProducts, allProducts }) {
     <>
       <div className="header">
         <div className="left-section">
-          <Link to="/" className="header-link">
+          <Link 
+           to="/" 
+           className="header-link"
+           onClick={async()=>fetchProducts()}
+          >
             <img className="logo" src="images/amazon-logo-white.png" />
             <img
               className="mobile-logo"
@@ -63,7 +67,7 @@ function Header({ cart, products, setProducts, allProducts }) {
             <span className="orders-text">Orders</span>
           </Link>
 
-          <Link to="/checkout" className="cart-link header-link">
+          <Link to="/checkout" className="cart-link header-link" onClick={async()=>await fetchCart()}>
             <img className="cart-icon" src="images/icons/cart-icon.png" />
             <div className="cart-quantity">
               {cart.reduce((acc, cur) => (acc += cur.quantity), 0)}

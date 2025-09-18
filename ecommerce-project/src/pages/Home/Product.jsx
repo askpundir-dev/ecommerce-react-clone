@@ -1,69 +1,63 @@
 import axios from "axios";
 import { useState, useRef } from "react";
 import { formatMoney } from "../../utils/money";
-function Product({ product, setCart, products }) {
+function Product({ product, setCart, products, fetchCart }) {
   const [quantity, setQuantity] = useState(1);
   const [showAddedMessage, setShowAddedMessage] = useState(false);
   let messageTimeoutId = useRef(null);
 
-  //using promise .then to handle the promise response
-  function addToCart(productId) {
+  async function addToCart(productId) {
     console.warn("Adding to cart:", productId);
-    console.log(messageTimeoutId.current);
+
     if (!productId) {
       console.error("Product ID is missing");
       return;
     }
 
     const selectedQuantity = quantity;
-    axios
-      .post("/api/cart-items", {
+
+    try {
+      const response = await axios.post("/api/cart-items", {
         productId,
         quantity: selectedQuantity,
-      })
-      .then((response) => {
-        console.log(response.data);
-        const newCartItem = response.data; // backend returns the new/updated cart item
-
-        // ✅ Update cart in App state
-        setCart((prevCart) => {
-          const existingItem = prevCart.find(
-            (item) => item.productId === newCartItem.productId
-          );
-
-          if (existingItem) {
-            // if item already in cart, update its quantity
-
-            return prevCart.map((item) =>
-              item.productId === newCartItem.productId
-                ? { ...item, quantity: newCartItem.quantity }
-                : item
-            );
-          } else {
-            // new product added
-            const product = products.find(
-              (product) => product.id === newCartItem.productId
-            );
-            return [...prevCart, { ...newCartItem, product: product }];
-          }
-        });
-
-        // Reset quantity to 1 after adding to cart
-        setQuantity(1);
-
-        clearTimeout(messageTimeoutId.current); // Clear any existing timeout for this product
-
-        setShowAddedMessage(true);
-        messageTimeoutId.current = setTimeout(() => {
-          setShowAddedMessage(false);
-        }, 1500); // Hide message after 1.5 seconds
-
-        console.log(messageTimeoutId);
-      })
-      .catch((err) => {
-        console.log(err.message);
-        return;
       });
+
+      const newCartItem = response.data; // backend returns the new/updated cart item
+
+      // ✅ Optimistic update
+      setCart((prevCart) => {
+        const existingItem = prevCart.find(
+          (item) => item.productId === newCartItem.productId
+        );
+
+        if (existingItem) {
+          return prevCart.map((item) =>
+            item.productId === newCartItem.productId
+              ? { ...item, quantity: newCartItem.quantity }
+              : item
+          );
+        } else {
+          const product = products.find(
+            (product) => product.id === newCartItem.productId
+          );
+          return [...prevCart, { ...newCartItem, product }];
+        }
+      });
+
+      // Reset quantity after adding
+      setQuantity(1);
+
+      clearTimeout(messageTimeoutId.current);
+      setShowAddedMessage(true);
+      messageTimeoutId.current = setTimeout(() => {
+        setShowAddedMessage(false);
+      }, 1500);
+    } catch (err) {
+      console.error("Add to cart failed:", err.message);
+
+      // ✅ Only refetch on error
+      await fetchCart();
+    }
   }
 
   return (
