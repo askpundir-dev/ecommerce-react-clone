@@ -54,9 +54,9 @@ function TrackingPage({
     }
   });
 
-  document.title = "Order Tracking";
   return (
     <>
+      <title>Tracking</title>
       <Header
         {...{
           cart,
