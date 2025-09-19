@@ -1,13 +1,21 @@
 import { Link } from "react-router";
 import "./CheckoutHeader.css";
+import { useProducts } from "../../context-provider/Context";
 
 function CheckoutHeader({ cart }) {
+  const { loadFetchedProducts } = useProducts();
   return (
     <>
       <div className="checkout-header">
         <div className="header-content">
           <div className="checkout-header-left-section">
-            <Link to="/">
+            <Link
+              to="/"
+              onClick={() => {
+                console.log("setting All Products..");
+                loadFetchedProducts().then(() => console.log("success2"));
+              }}
+            >
               <img className="logo" src="images/amazon-logo.png" />
               <img
                 className="mobile-logo"
@@ -18,7 +26,14 @@ function CheckoutHeader({ cart }) {
 
           <div className="checkout-header-middle-section">
             Checkout (
-            <Link to="/" className="return-to-home-link">
+            <Link
+              to="/"
+              className="return-to-home-link"
+              onClick={() => {
+                console.log("setting All Products..");
+                loadFetchedProducts().then(() => console.log("success2"));
+              }}
+            >
               {cart.reduce((total, curr) => total + curr.quantity, 0)}
             </Link>
             )

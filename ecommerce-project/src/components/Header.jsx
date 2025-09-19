@@ -1,22 +1,26 @@
-import { Link,useNavigate} from "react-router";
-import { useRef} from "react";
+import { Link, useNavigate } from "react-router";
+import { useRef } from "react";
 import searchProducts from "../utils/searchProducts.js";
 import "./header.css";
+import { useProducts, useCart } from "../context-provider/Context.js";
 
-function Header({ cart, products, setProducts, allProducts,fetchCart,fetchProducts }) {
-  const searchProductsRef = useRef(null);
-   
+function Header() {
+  const headerInputBoxRef = useRef(null);
+  const { cart, loadFetchedCart } = useCart();
+  const { products, setProducts, allProducts, loadFetchedProducts } =
+    useProducts();
   const navigate = useNavigate();
- 
-  // console.log(products);
+
   return (
     <>
       <div className="header">
         <div className="left-section">
-          <Link 
-           to="/" 
-           className="header-link"
-           onClick={async()=>fetchProducts()}
+          <Link
+            to="/"
+            className="header-link"
+            onClick={() => {
+              loadFetchedProducts();
+            }}
           >
             <img className="logo" src="images/amazon-logo-white.png" />
             <img
@@ -28,16 +32,16 @@ function Header({ cart, products, setProducts, allProducts,fetchCart,fetchProduc
 
         <div className="middle-section">
           <input
-            ref={searchProductsRef}
+            ref={headerInputBoxRef}
             className="search-bar"
             type="text"
             placeholder="Search"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                navigate('/');
+                navigate("/");
                 searchProducts({
                   products,
-                  searchProductsRef,
+                  headerInputBoxRef,
                   allProducts,
                   setProducts,
                 });
@@ -49,10 +53,10 @@ function Header({ cart, products, setProducts, allProducts,fetchCart,fetchProduc
           <button
             className="search-button"
             onClick={() => {
-              navigate('/');
+              navigate("/");
               searchProducts({
                 products,
-                searchProductsRef,
+                headerInputBoxRef,
                 allProducts,
                 setProducts,
               });
@@ -67,7 +71,11 @@ function Header({ cart, products, setProducts, allProducts,fetchCart,fetchProduc
             <span className="orders-text">Orders</span>
           </Link>
 
-          <Link to="/checkout" className="cart-link header-link" onClick={async()=>await fetchCart()}>
+          <Link
+            to="/checkout"
+            className="cart-link header-link"
+            onClick={loadFetchedCart}
+          >
             <img className="cart-icon" src="images/icons/cart-icon.png" />
             <div className="cart-quantity">
               {cart.reduce((acc, cur) => (acc += cur.quantity), 0)}

@@ -1,5 +1,5 @@
 import ProductContainer from "./ProductContainer";
-import './ProductsGrid.css'
+import "./ProductsGrid.css";
 
 /**
  * Renders a grid layout for displaying products.
@@ -10,10 +10,10 @@ import './ProductsGrid.css'
  * @param {Function} props.fetchCart - Function to refetch the cart data.
  * @returns {JSX.Element} A component that displays products in a grid.
  */
-function ProductsGrid({ products, cart, setCart,fetchCart }) {
+function ProductsGrid() {
   return (
     <div className="products-grid">
-      <ProductContainer products={products} cart={cart} setCart={setCart} fetchCart={fetchCart} />
+      <ProductContainer />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import "./NoResults.css";
 
-function NoResults({ setProducts, allProducts }) {
+function NoResults({  loadFetchedProducts }) {
   return (
     <>
       <div className="no-results">
@@ -14,9 +14,7 @@ function NoResults({ setProducts, allProducts }) {
         </p>
         <button
           className="no-results-btn"
-          onClick={() => {
-           setProducts(allProducts);
-          }}
+          onClick={loadFetchedProducts}
         >
           Go back to all products
         </button>

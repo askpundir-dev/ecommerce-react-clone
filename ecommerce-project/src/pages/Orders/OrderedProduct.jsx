@@ -1,28 +1,12 @@
 import dayjs from "dayjs";
 import { Link } from "react-router";
 import addToCart from "../../utils/addToCart";
+import { useContext } from "react";
+import { CartContext, ProductsContext } from "../../context-provider/Context";
 
-/**
- * Renders a single product item within an order.
- * Displays product image, name, delivery date, quantity, and provides options to "Add to Cart" again or "Track package".
- *
- * @param {object} props - The component props.
- * @param {object} props.ordered - The ordered product object containing details like product info, quantity, and delivery time.
- * @param {Function} props.set$Package - State setter function to update the package details for the tracking page.
- * @param {number} props.orderTimeMs - The timestamp in milliseconds when the order was placed.
- * @param {Function} props.setCart - State setter function to update the cart state.
- * @param {Array<object>} props.products - The list of all available products.
- * @param {Function} props.fetchCart - Function to refetch the cart data from the server.
- * @returns {JSX.Element} A JSX fragment representing a single ordered product.
- */
-function OrderedProduct({
-  ordered,
-  set$Package,
-  orderTimeMs,
-  setCart,
-  products,
-  fetchCart,
-}) {
+function OrderedProduct({ ordered, set$Package, orderTimeMs }) {
+  const { setCart, loadFetchedCart } = useContext(CartContext);
+  const { products } = useContext(ProductsContext);
   return (
     <>
       <div className="product-image-container">
@@ -42,7 +26,7 @@ function OrderedProduct({
               productId: ordered.productId,
               setCart,
               products,
-              fetchCart,
+              loadFetchedCart,
             });
           }}
           className="buy-again-button button-primary"

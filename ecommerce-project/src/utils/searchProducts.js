@@ -1,11 +1,11 @@
-function searchProducts({searchProductsRef,allProducts,setProducts}) {
+function searchProducts({headerInputBoxRef,allProducts,setProducts}) {
   // console.log(allProducts)
-  if (!searchProductsRef.current.value){
+  if (!headerInputBoxRef.current.value){
     setProducts(allProducts);
     console.log('returning...')
     return;
   } 
-  const searchQuery = searchProductsRef.current.value.toLowerCase().trim();
+  const searchQuery = headerInputBoxRef.current.value.toLowerCase().trim();
   console.log(searchQuery);
   const searchedProducts = allProducts.filter((product) => {
     const nameMatches = product.name.toLowerCase().includes(searchQuery);
@@ -15,7 +15,7 @@ function searchProducts({searchProductsRef,allProducts,setProducts}) {
     return nameMatches || keywordsMatchs;
   });
    setProducts(searchedProducts);
-   searchProductsRef.current.value='';
+   headerInputBoxRef.current.value='';
 
 }
 

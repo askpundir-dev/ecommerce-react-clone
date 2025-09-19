@@ -1,31 +1,19 @@
 import { useState, useRef } from "react";
-import axios from "axios";
 import dayjs from "dayjs";
 import { formatMoney } from "../../utils/money.js";
 import DeliveryOptions from "./DeliveryOptions.jsx";
 import updateCartItemInState from "../../utils/updateCartItemQuantity.js";
+import { sendDeleteRequest, sendUpdateCartReq } from "../../api/api.js";
 import "./OrderSummary.css";
 
-/**
- * Renders the order summary section of the checkout page.
- * It displays each item in the cart, providing functionality to update quantity,
- * delete items, and select delivery options.
- *
- * @param {object} props - The component props.
- * @param {Array<object>} props.cart - An array of objects, where each object represents an item in the cart.
- * @param {Function} props.setCart - The state setter function to update the cart.
- * @param {Array<object>} props.deliveryOptions - An array of available delivery option objects.
- * @returns {JSX.Element} A React component that renders the list of cart items and their details.
- */
 function OrderSummary({ cart, setCart, deliveryOptions }) {
   const quantityInputRef = useRef({});
   const [isPressed, setIsPressed] = useState({});
-  function deleteCartItem(productId) {
-    axios
-      .delete(`/api/cart-items/${productId}`)
-      .then((response) => {
-        console.log(response.data);
 
+  function deleteCartItem(productId) {
+    sendDeleteRequest(productId)
+      .then(() => {
+       // console.log(data);
         setCart((prev) => prev.filter((item) => item.productId !== productId));
       })
       .catch((error) => {
@@ -34,7 +22,6 @@ function OrderSummary({ cart, setCart, deliveryOptions }) {
   }
 
   function updateCartItem(productId) {
-    //console.log("updating", productId);
     setIsPressed({ [productId]: true });
   }
 
@@ -54,14 +41,11 @@ function OrderSummary({ cart, setCart, deliveryOptions }) {
       setIsPressed({ [productId]: false });
       return;
     }
-    axios
-      .put(`/api/cart-items/${productId}`, {
-        quantity: quantityChange,
-      })
-      .then((response) => {
-        console.log(response.data);
+    sendUpdateCartReq(productId, quantityChange)
+      .then((data) => {
+       // console.log(data);
 
-        const updatedItem = response.data;
+        const updatedItem = data;
         setCart((prev) => updateCartItemInState(prev, updatedItem));
 
         setIsPressed({ [productId]: false });

@@ -1,18 +1,10 @@
 import { Link } from "react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import dayjs from "dayjs";
 import Header from "../../components/Header";
 import "./TrackingPage.css";
 
-function TrackingPage({
-  cart,
-  products,
-  setProducts,
-  allProducts,
-  $Package,
-  fetchCart,
-  fetchProducts,
-}) {
+function TrackingPage({ $Package }) {
   const [status, setStatus] = useState(null);
 
   const progressMap = {
@@ -57,16 +49,7 @@ function TrackingPage({
   return (
     <>
       <title>Tracking</title>
-      <Header
-        {...{
-          cart,
-          products,
-          setProducts,
-          allProducts,
-          fetchCart,
-          fetchProducts,
-        }}
-      />
+      <Header />
 
       {!$Package ? (
         <div className="no-tracking-info">

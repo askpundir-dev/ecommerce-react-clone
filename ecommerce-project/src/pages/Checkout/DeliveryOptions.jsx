@@ -1,7 +1,8 @@
-import axios from "axios";
+
 import dayjs from "dayjs";
 import { formatMoney } from "../../utils/money";
 
+import { sendDeliveryOptnUpdtReq } from "../../api/api";
 
 function DeliveryOptions({ setCart, cartItem, deliveryOptions }) {
   return deliveryOptions.map((option) => {
@@ -21,11 +22,10 @@ function DeliveryOptions({ setCart, cartItem, deliveryOptions }) {
                   : item
               )
             );
-            axios
-              .put(`/api/cart-items/${cartItem.productId}`, {
-                deliveryOptionId: option.id,
-              })
-              .then((response) => console.log(response.data));
+
+            sendDeliveryOptnUpdtReq(cartItem.productId, option.id)
+              .then((data) => console.log(data))
+              .catch((error) => console.error(error));
           }}
         />
         <div>
