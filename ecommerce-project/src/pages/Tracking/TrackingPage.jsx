@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { useState, useEffect} from "react";
+import { useState, useEffect, useCallback } from "react";
 import dayjs from "dayjs";
 import Header from "../../components/Header";
 import "./TrackingPage.css";
@@ -14,17 +14,18 @@ function TrackingPage({ $Package }) {
     Delivered: "100%",
   };
 
-  function findStatus() {
-    const estimatedTimeMs = $Package.estimatedDeliveryTimeMs; // total estimated time in ms
+  const findStatus = useCallback(() => {
+    const deliveryEndMs = $Package.estimatedDeliveryTimeMs; // delivery timestamp
+    const orderCreatedAtMs = $Package.orderTimeMs; // order placed timestamp
     const timeNowMs = Date.now();
-    const orderCreatedAtMs = $Package.orderTimeMs;
 
+    const totalDuration = deliveryEndMs - orderCreatedAtMs;
     const elapsed = timeNowMs - orderCreatedAtMs;
 
-    // Divide total time into 3 equal phases
-    const phase1End = estimatedTimeMs / 3;
-    const phase2End = (2 * estimatedTimeMs) / 3;
-    const phase3End = estimatedTimeMs;
+    // Divide total duration into 3 equal phases
+    const phase1End = totalDuration / 3;
+    const phase2End = (2 * totalDuration) / 3;
+    const phase3End = totalDuration;
 
     let status;
     if (elapsed < phase1End) {
@@ -37,14 +38,27 @@ function TrackingPage({ $Package }) {
       status = "Delivered";
     }
 
+    console.log({
+      deliveryEndMs,
+      orderCreatedAtMs,
+      timeNowMs,
+      totalDuration,
+      elapsed,
+      status
+    });
+
     setStatus(status);
-  }
+  }, [$Package]);
 
   useEffect(() => {
     if ($Package) {
       findStatus();
+      const interval = setInterval(() => {
+        findStatus();
+      }, 5000); // update every 5 seconds
+      return () => clearInterval(interval);
     }
-  });
+  }, [$Package, findStatus]);
 
   return (
     <>
@@ -90,6 +104,13 @@ function TrackingPage({ $Package }) {
                 }`}
               >
                 Shipped
+              </div>
+              <div
+                className={`progress-label ${
+                  status === "Out For Delivery" ? "current-status" : ""
+                }`}
+              >
+                Out For Delivery
               </div>
               <div
                 className={`progress-label ${
