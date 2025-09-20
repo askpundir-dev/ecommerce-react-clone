@@ -78,13 +78,14 @@ export function CartProvider({ children }) {
   );
 }
 
-function OrdersProvider({ children }) {
+export function OrdersProvider({ children }) {
   const [orders, setOrders] = useState([]);
 
   async function loadFetchedOrders() {
     try {
       const data = await fetchOrders();
       setOrders(data);
+      console.log("Order Placed Successfully!");
     } catch (err) {
       console.log(err.message);
     }
@@ -94,7 +95,7 @@ function OrdersProvider({ children }) {
   }, []);
 
   return (
-    <OrdersContext.Provider value={{ orders, setOrders }}>
+    <OrdersContext.Provider value={{ orders, setOrders, loadFetchedOrders }}>
       {children}
     </OrdersContext.Provider>
   );

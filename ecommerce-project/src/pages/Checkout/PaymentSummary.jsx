@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { /*calculateCartSummary*/ formatMoney } from "../../utils/money";
 import { fetchPaymentSummary, postOrdersRequest } from "../../api/api.js";
+import { useOrders } from "../../context-provider/Context.js";
 import styles from "./PaymentSummary.module.css";
 function PaymentSummary({ cart, setCart }) {
   const [paymentSummary, setPaymentSummary] = useState(null);
+  const { loadFetchedOrders } = useOrders();
   useEffect(() => {
     fetchPaymentSummary()
       .then((data) => {
@@ -33,11 +35,13 @@ function PaymentSummary({ cart, setCart }) {
     console.log("placing-order");
 
     postOrdersRequest().then(() => {
-      //console.log(data);
-      setCart([]);
-    });
+      loadFetchedOrders();
+      navigate("/orders");
 
-    navigate("/orders");
+      setCart([]);
+      setTimeout(() => {
+      }, 1);
+    });
   }
 
   return (

@@ -7,12 +7,9 @@ import "./TrackingPage.css";
 function TrackingPage({ $Package }) {
   const [status, setStatus] = useState(null);
 
-  const progressMap = {
-    Processing: "8%",
-    Shipped: "50%",
-    "Out For Delivery": "75%",
-    Delivered: "100%",
-  };
+  // ...existing code...
+
+  const [percent, setPercent] = useState(0);
 
   const findStatus = useCallback(() => {
     const deliveryEndMs = $Package.estimatedDeliveryTimeMs; // delivery timestamp
@@ -38,14 +35,8 @@ function TrackingPage({ $Package }) {
       status = "Delivered";
     }
 
-    console.log({
-      deliveryEndMs,
-      orderCreatedAtMs,
-      timeNowMs,
-      totalDuration,
-      elapsed,
-      status
-    });
+    const percent = Math.min(100, Math.max(0, (elapsed / totalDuration) * 100));
+    setPercent(percent);
 
     setStatus(status);
   }, [$Package]);
@@ -124,7 +115,7 @@ function TrackingPage({ $Package }) {
             <div className="progress-bar-container">
               <div
                 className="progress-bar"
-                style={{ width: progressMap[status] || "0%" }}
+                style={{ width: `${percent}%` }}
               ></div>
             </div>
           </div>
