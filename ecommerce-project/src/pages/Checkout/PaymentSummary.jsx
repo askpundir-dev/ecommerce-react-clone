@@ -37,9 +37,8 @@ function PaymentSummary({ cart, setCart }) {
     postOrdersRequest().then(() => {
       loadFetchedOrders();
       navigate("/orders");
-
-      setCart([]);
       setTimeout(() => {
+        setCart([]);
       }, 1);
     });
   }
