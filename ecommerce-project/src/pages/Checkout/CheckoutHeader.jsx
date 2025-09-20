@@ -1,9 +1,8 @@
+import { memo } from "react";
 import { Link } from "react-router";
 import "./CheckoutHeader.css";
-import { useProducts } from "../../context-provider/Context";
 
-function CheckoutHeader({ cart }) {
-  const { loadFetchedProducts } = useProducts();
+const CheckoutHeader = memo(({ cart, loadFetchedProducts }) => {
   return (
     <>
       <div className="checkout-header">
@@ -46,6 +45,6 @@ function CheckoutHeader({ cart }) {
       </div>
     </>
   );
-}
+});
 
 export default CheckoutHeader;

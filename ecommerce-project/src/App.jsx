@@ -6,9 +6,15 @@ import OrdersPage from "./pages/Orders/OrdersPage.jsx";
 import TrackingPage from "./pages/Tracking/TrackingPage.jsx";
 import "./App.css";
 
+// import axios from "axios";
+// import { useEffect } from "react"; // for setup of resetting the backend 
+
 function App() {
   const [$Package, set$Package] = useState(null);
 
+  // useEffect(() => {
+  //   axios.post('api/reset')
+  // }, []);
   return (
     <Routes>
       <Route index element={<HomePage />} />

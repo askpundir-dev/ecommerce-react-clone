@@ -3,7 +3,6 @@ import { formatMoney } from "../../utils/money";
 import OrderedProduct from "./OrderedProduct";
 
 function OrderDetails({ order, set$Package }) {
- 
   return (
     <div className="order-container">
       <div className="order-header">

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, memo } from "react";
 import dayjs from "dayjs";
 import { formatMoney } from "../../utils/money.js";
 import DeliveryOptions from "./DeliveryOptions.jsx";
@@ -6,14 +6,14 @@ import updateCartItemInState from "../../utils/updateCartItemQuantity.js";
 import { sendDeleteRequest, sendUpdateCartReq } from "../../api/api.js";
 import "./OrderSummary.css";
 
-function OrderSummary({ cart, setCart, deliveryOptions }) {
+const OrderSummary = memo(({ cart, setCart, deliveryOptions }) => {
   const quantityInputRef = useRef({});
   const [isPressed, setIsPressed] = useState({});
 
   function deleteCartItem(productId) {
     sendDeleteRequest(productId)
       .then(() => {
-       // console.log(data);
+        // console.log(data);
         setCart((prev) => prev.filter((item) => item.productId !== productId));
       })
       .catch((error) => {
@@ -43,7 +43,7 @@ function OrderSummary({ cart, setCart, deliveryOptions }) {
     }
     sendUpdateCartReq(productId, quantityChange)
       .then((data) => {
-       // console.log(data);
+        // console.log(data);
 
         const updatedItem = data;
         setCart((prev) => updateCartItemInState(prev, updatedItem));
@@ -152,6 +152,6 @@ function OrderSummary({ cart, setCart, deliveryOptions }) {
         })}
     </div>
   );
-}
+});
 
 export default OrderSummary;

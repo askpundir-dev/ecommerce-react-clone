@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { ProductsContext, CartContext, OrdersContext } from "./Context";
 import { fetchProducts, fetchCart, fetchOrders } from "../api/api";
 
@@ -16,7 +16,8 @@ export function ProductsProvider({ children }) {
   const [allProducts, setAllProducts] = useState([]);
   const [products, setProducts] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
-  async function loadFetchedProducts() {
+
+  const loadFetchedProducts = useCallback(async () => {
     try {
       const data = await fetchProducts();
       setAllProducts(data);
@@ -25,18 +26,18 @@ export function ProductsProvider({ children }) {
       console.error("Error loading data:", error.message);
     } finally {
       setLoadingProducts(false);
-      console.log("success1");
+      console.log("Products Loaded Successfully!");
     }
-  }
+  }, []);
+
   useEffect(() => {
     loadFetchedProducts();
-  }, []);
+  }, [loadFetchedProducts]);
 
   return (
     <ProductsContext.Provider
       value={{
         allProducts,
-        setAllProducts,
         products,
         setProducts,
         loading: loadingProducts,
@@ -54,7 +55,7 @@ export function CartProvider({ children }) {
 
   const [loadingCart, setLoadingCart] = useState(true);
 
-  async function loadFetchedCart() {
+  const loadFetchedCart = useCallback(async () => {
     try {
       const data = await fetchCart();
       setCart(data);
@@ -62,12 +63,13 @@ export function CartProvider({ children }) {
       console.error("Error loading data:", error.message);
     } finally {
       setLoadingCart(false);
+      console.log("Cart Loaded Successfully!");
     }
-  }
+  }, []);
 
   useEffect(() => {
     loadFetchedCart();
-  }, []);
+  }, [loadFetchedCart]);
 
   return (
     <CartContext.Provider
@@ -81,18 +83,20 @@ export function CartProvider({ children }) {
 export function OrdersProvider({ children }) {
   const [orders, setOrders] = useState([]);
 
-  async function loadFetchedOrders() {
+  const loadFetchedOrders = useCallback(async () => {
     try {
       const data = await fetchOrders();
       setOrders(data);
-      console.log("Order Placed Successfully!");
     } catch (err) {
       console.log(err.message);
+    } finally {
+      console.log("Order Loaded Successfully!");
     }
-  }
+  }, []);
+
   useEffect(() => {
     loadFetchedOrders();
-  }, []);
+  }, [loadFetchedOrders]);
 
   return (
     <OrdersContext.Provider value={{ orders, setOrders, loadFetchedOrders }}>

@@ -9,7 +9,7 @@ import { useProducts, useCart } from "../../context-provider/Context.js";
 import Loading from "../../components/Loading.jsx";
 function CheckoutPage() {
   const [deliveryOptions, setDeliveryOptions] = useState([]);
-  const { allProducts, setProducts } = useProducts();
+  const { allProducts, setProducts,loadFetchedProducts } = useProducts();
   const { cart, setCart, loading } = useCart();
   useEffect(() => {
     fetchDeliveryOptions()
@@ -18,12 +18,12 @@ function CheckoutPage() {
       })
       .catch((er) => console.warn(er.message));
   }, []);
- // console.log(cart);
+  // console.log(cart);
 
   return (
     <>
       <title>Checkout</title>
-      <CheckoutHeader {...{ cart }} />
+      <CheckoutHeader {...{ cart,loadFetchedProducts }} />
       <Loading loading={loading} />
       {!loading && (
         <div className="checkout-page">

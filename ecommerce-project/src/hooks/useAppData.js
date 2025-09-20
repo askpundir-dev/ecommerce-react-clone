@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { fetchProducts, fetchCart, fetchOrders } from "../api/api";
 
-export default function useAppData() {
+function useAppData() {
   // Products
   const [allProducts, setAllProducts] = useState([]);
   const [products, setProducts] = useState([]);

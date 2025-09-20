@@ -80,7 +80,6 @@
   transition: width 700ms ease-in-out; /* smooth animation */
 }
 
-
 .no-tracking-info {
   position: fixed;
   top: 50%;

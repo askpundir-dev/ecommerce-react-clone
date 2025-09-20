@@ -43,6 +43,7 @@ function PaymentSummary({ cart, setCart }) {
     });
   }
 
+
   return (
     <div className="payment-summary">
       <div className="payment-summary-title">Payment Summary</div>

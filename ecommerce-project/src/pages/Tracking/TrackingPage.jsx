@@ -10,7 +10,8 @@ function TrackingPage({ $Package }) {
   // ...existing code...
 
   const [percent, setPercent] = useState(0);
-
+  console.log(percent);
+  
   const findStatus = useCallback(() => {
     const deliveryEndMs = $Package.estimatedDeliveryTimeMs; // delivery timestamp
     const orderCreatedAtMs = $Package.orderTimeMs; // order placed timestamp
@@ -36,7 +37,8 @@ function TrackingPage({ $Package }) {
     }
 
     const percent = Math.min(100, Math.max(0, (elapsed / totalDuration) * 100));
-    setPercent(percent);
+    setPercent(3+percent);
+    console.log(percent);
 
     setStatus(status);
   }, [$Package]);
@@ -115,7 +117,7 @@ function TrackingPage({ $Package }) {
             <div className="progress-bar-container">
               <div
                 className="progress-bar"
-                style={{ width: `${percent}%` }}
+                style={{ width: `${percent}%`}}
               ></div>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router";
-import { useRef } from "react";
+import { useRef} from "react";
 import searchProducts from "../utils/searchProducts.js";
 import "./header.css";
 import { useProducts, useCart } from "../context-provider/Context.js";
