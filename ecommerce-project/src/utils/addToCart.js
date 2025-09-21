@@ -1,7 +1,7 @@
 import axios from "axios";
 import API_URL from "../env-config";
 
-async function addToCart({
+export default async function addToCart({
   productId,
   quantity = 1,
   setCart,
@@ -48,9 +48,7 @@ async function addToCart({
     console.error("Add to cart failed:", err.message);
 
     // ✅ Only refetch on error
-    await  loadFetchedCart();
+    await loadFetchedCart();
   }
   return 1;
 }
-
-export default addToCart;

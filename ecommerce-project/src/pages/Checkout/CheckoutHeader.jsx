@@ -30,7 +30,7 @@ const CheckoutHeader = memo(({ cart, loadFetchedProducts }) => {
               className="return-to-home-link"
               onClick={() => {
                 console.log("setting All Products..");
-                loadFetchedProducts().then(() => console.log("success2"));
+                loadFetchedProducts().then(() => console.log("Successful in setting Products"));
               }}
             >
               {cart.reduce((total, curr) => total + curr.quantity, 0)}

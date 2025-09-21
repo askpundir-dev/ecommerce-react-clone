@@ -1,7 +1,5 @@
-
 import dayjs from "dayjs";
 import { formatMoney } from "../../utils/money";
-
 import { sendDeliveryOptnUpdtReq } from "../../api/api";
 
 function DeliveryOptions({ setCart, cartItem, deliveryOptions }) {
