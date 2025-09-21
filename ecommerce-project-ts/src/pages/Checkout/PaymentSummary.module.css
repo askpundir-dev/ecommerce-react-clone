@@ -1,0 +1,10 @@
+
+.disabled-place-order-btn {
+  background-color: rgb(25, 135, 84);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.disabled-place-order-btn:hover {
+  background-color: rgb(25, 135, 84);
+}

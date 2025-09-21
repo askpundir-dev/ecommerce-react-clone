@@ -1,6 +1,6 @@
 import { useState, useRef, memo } from "react";
 import dayjs from "dayjs";
-import { formatMoney } from "../../utils/money.js";
+import { formatMoney } from "../../utils/money";
 import DeliveryOptions from "./DeliveryOptions.jsx";
 import updateCartItemInState from "../../utils/updateCartItemQuantity.js";
 import { sendDeleteRequest, sendUpdateCartReq } from "../../api/api.js";
