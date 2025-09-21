@@ -3,7 +3,7 @@ import { useCart } from "../../context-provider/Context";
 import { formatMoney } from "../../utils/money";
 import addToCart from "../../utils/addToCart";
 
-function Product({ product, products }) {
+export default function Product({ product, products }) {
   const { setCart, loadFetchedCart } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [showAddedMessage, setShowAddedMessage] = useState(false);
@@ -37,7 +37,7 @@ function Product({ product, products }) {
   return (
     <div className="product-container">
       <div className="product-image-container">
-        <img className="product-image" src={product.image} />
+        <img className="product-image" src={product.image} alt={product.name} />
       </div>
 
       <div className="product-name limit-text-to-2-lines">{product.name}</div>
@@ -90,5 +90,3 @@ function Product({ product, products }) {
     </div>
   );
 }
-
-export default Product;
