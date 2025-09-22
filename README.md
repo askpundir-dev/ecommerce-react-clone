@@ -47,8 +47,8 @@ A responsive **E-commerce clone website** built with **React, Vite, and JavaScri
 ### 🏠 Homepage
 ![Home Page](screenshots/homepage.png)
 
-### 🔍 Search Bar
-![Search Bar](screenshots/searchbar.png)
+### 🔍 Search Products
+![Search Bar](screenshots/searchproducts.png)
 
 ### 🛒 Empty Cart
 ![Empty Cart](screenshots/empty-cart.png)
@@ -60,7 +60,8 @@ A responsive **E-commerce clone website** built with **React, Vite, and JavaScri
 ![Orders Page](screenshots/orders.png)
 
 ### 🚚 Delivery Options Selection
-![Delivery Options](screenshots/delivery-options.png)
 
+### 🛤️ Tracking Page
+![Tracking Page](screenshots/tracking.png)
 ---
 
