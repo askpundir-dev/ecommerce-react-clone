@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router";
 import { useRef} from "react";
 import searchProducts from "../utils/searchProducts.js";
-import "./header.css";
+import "./Header.css";
 import { useProducts, useCart } from "../context-provider/Context.js";
 
 function Header() {
