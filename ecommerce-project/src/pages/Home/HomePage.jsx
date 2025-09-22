@@ -3,7 +3,7 @@ import Header from "../../components/Header";
 import ProductsGrid from "./ProductsGrid.jsx";
 import NoResults from "../../components/NoResults.jsx";
 import Loading from "../../components/Loading.jsx";
-import "./homepage.css";
+import "./HomePage.css";
 
 function HomePage() {
   const { loading, loadFetchedProducts, products } = useProducts();
