@@ -11,19 +11,19 @@ function DeliveryOptions({ setCart, cartItem, deliveryOptions }) {
           className="delivery-option-input"
           name={`delivery-option-${cartItem.productId}`} // group by product
           checked={cartItem.deliveryOptionId === option.id}
-          onChange={() => {
-            // ✅ update parent cart state
-            setCart((prev) =>
-              prev.map((item) =>
-                item.productId === cartItem.productId
-                  ? { ...item, deliveryOptionId: option.id }
-                  : item
-              )
-            );
-
-            sendDeliveryOptnUpdtReq(cartItem.productId, option.id)
-              .then((data) => console.log(data))
-              .catch((error) => console.error(error));
+          onChange={async () => {
+            try {
+              await sendDeliveryOptnUpdtReq(cartItem.productId, option.id);
+              setCart((prev) =>
+                prev.map((item) =>
+                  item.productId === cartItem.productId
+                    ? { ...item, deliveryOptionId: option.id }
+                    : item
+                )
+              );
+            } catch (error) {
+              console.error(error);
+            }
           }}
         />
         <div>
