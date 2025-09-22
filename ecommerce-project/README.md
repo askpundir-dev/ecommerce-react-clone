@@ -1,12 +1,72 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# E-commerce React Clone
 
-Currently, two official plugins are available:
+A modern e-commerce web application built with React and Vite, featuring product browsing, cart management, checkout, and order tracking.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- Browse products with images and details
+- Add/remove items to cart
+- Update cart item quantities
+- Checkout and order summary
+- Order tracking
+- Responsive design
+- Fast performance with Vite
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Project Structure
+
+```
+ecommerce-project/
+├── public/           # Static assets (images, icons)
+├── src/
+│   ├── api/          # API logic
+│   ├── assets/       # App assets
+│   ├── components/   # Reusable UI components
+│   ├── context-provider/ # React Context for global state
+│   ├── hooks/        # Custom React hooks
+│   ├── pages/        # App pages (Home, Checkout, Orders, Tracking)
+│   ├── test/         # Unit and component tests
+│   ├── utils/        # Utility functions
+│   ├── App.jsx       # Main app component
+│   ├── main.jsx      # App entry point
+│   └── ...           # Styles and config
+├── data/             # Product data
+├── .env              # Environment variables
+├── package.json      # Project dependencies and scripts
+├── vite.config.js    # Vite configuration
+└── README.md         # Project documentation
+```
+
+## Getting Started
+
+1. **Install dependencies:**
+	```bash
+	npm install
+	```
+
+2. **Start the development server:**
+	```bash
+	npm run dev
+	```
+
+3. **Run tests:**
+	```bash
+	npm test
+	```
+
+## Scripts
+
+- `npm run dev` — Start development server
+- `npm run build` — Build for production
+- `npm test` — Run tests
+
+## Technologies Used
+
+- React
+- Vite
+- JavaScript (ES6+)
+- CSS
+
+## License
+
+This project is for educational purposes.
