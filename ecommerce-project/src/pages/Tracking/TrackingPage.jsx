@@ -11,8 +11,8 @@ function TrackingPage({ $Package }) {
 
   const [percent, setPercent] = useState(0);
   console.log(percent);
-  
   const findStatus = useCallback(() => {
+    if(!$Package) return;
     const deliveryEndMs = $Package.estimatedDeliveryTimeMs; // delivery timestamp
     const orderCreatedAtMs = $Package.orderTimeMs; // order placed timestamp
     const timeNowMs = Date.now();
