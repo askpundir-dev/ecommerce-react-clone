@@ -25,16 +25,16 @@ export default function Product({ product, products }) {
       if (added) {
         setQuantity(1);
         clearTimeout(messageTimeoutId.current);
-        setShowAddedMessage(true);
-        messageTimeoutId.current = setTimeout(
-          () => setShowAddedMessage(false),
-          1000
-        );
       }
     } catch (err) {
       console.error("Add to cart failed", err);
     } finally {
       setAddToCartLoading(false); // always stop loading
+      setShowAddedMessage(true);
+      messageTimeoutId.current = setTimeout(
+        () => setShowAddedMessage(false),
+        1000
+      );
     }
   }
 
@@ -83,7 +83,9 @@ export default function Product({ product, products }) {
         Added
       </div>
       <button
-        className={`add-to-cart-button button-primary ${addToCartLoading&&"cursor-change"}`}
+        className={`add-to-cart-button button-primary ${
+          addToCartLoading && "cursor-change"
+        }`}
         style={{ position: "relative" }}
         disabled={addToCartLoading} // ✅ disables while request is in progress
         onClick={() => {
