@@ -31,11 +31,12 @@ export default function Product({ product, products }) {
     } finally {
       setAddToCartLoading(false); // always stop loading
       setShowAddedMessage(true);
-      messageTimeoutId.current = setTimeout(
-        () => setShowAddedMessage(false),
-        1000
-      );
+      // messageTimeoutId.current = setTimeout(
+      //   () => setShowAddedMessage(false),
+      //   1000
+      // );
     }
+    return setTimeout(() => setShowAddedMessage(false), 1000);
   }
 
   return (
