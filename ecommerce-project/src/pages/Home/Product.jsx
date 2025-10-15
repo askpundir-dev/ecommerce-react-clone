@@ -11,32 +11,30 @@ export default function Product({ product, products }) {
   const [addToCartLoading, setAddToCartLoading] = useState(false);
   let messageTimeoutId = useRef(null);
 
-  function handelAddToCart(productId) {
-    const added = addToCart({
-      productId,
-      quantity,
-      setCart,
-      products,
-      loadFetchedCart,
-      setAddToCartLoading,
-    });
-    if (added) {
-      // Reset quantity after adding
-      setQuantity(1);
+  async function handelAddToCart(productId) {
+    setAddToCartLoading(true); // start loading
+    try {
+      const added = await addToCart({
+        productId,
+        quantity,
+        setCart,
+        products,
+        loadFetchedCart,
+      });
 
-      //Clear Previous message timeout
-      clearTimeout(messageTimeoutId.current);
-
-      //show message
-      setShowAddedMessage(true);
-
-      //set timeout to hide message
-      messageTimeoutId.current = setTimeout(() => {
-        setShowAddedMessage(false);
-      }, 1500);
-
-      //shows loading on add to cart
-      setAddToCartLoading(false);
+      if (added) {
+        setQuantity(1);
+        clearTimeout(messageTimeoutId.current);
+        setShowAddedMessage(true);
+        messageTimeoutId.current = setTimeout(
+          () => setShowAddedMessage(false),
+          1500
+        );
+      }
+    } catch (err) {
+      console.error("Add to cart failed", err);
+    } finally {
+      setAddToCartLoading(false); // always stop loading
     }
   }
 

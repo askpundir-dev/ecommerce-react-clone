@@ -7,7 +7,6 @@ export default async function addToCart({
   setCart,
   products,
   loadFetchedCart,
-  setAddToCartLoading,
 }) {
   console.warn("Adding to cart:", productId);
 
@@ -17,16 +16,13 @@ export default async function addToCart({
   }
 
   const selectedQuantity = quantity;
-
   try {
-    
-    setAddToCartLoading(true);
     const response = await axios.post(`${API_URL}/cart-items`, {
       productId,
       quantity: selectedQuantity,
     });
 
-    const newCartItem = response.data; // backend returns the new/updated cart item
+    const newCartItem = response.data; // backend returns the new/updated cart
 
     // ✅ Optimistic update
     setCart((prevCart) => {
