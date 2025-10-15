@@ -1,0 +1,26 @@
+.loadingBodyStyles {
+  position: absolute;
+  top: 0;
+  left: 75%;
+
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 5px solid #ddd;
+  border-top: 5px solid rgb(250, 0, 133);
+  border-radius: 50%;
+  animation: spins 650ms linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spins {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+

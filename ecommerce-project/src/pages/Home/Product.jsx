@@ -2,11 +2,13 @@ import { useState, useRef } from "react";
 import { useCart } from "../../context-provider/Context";
 import { formatMoney } from "../../utils/money";
 import addToCart from "../../utils/addToCart";
+import style from "./Product.module.css";
 
 export default function Product({ product, products }) {
   const { setCart, loadFetchedCart } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [showAddedMessage, setShowAddedMessage] = useState(false);
+  const [addToCartLoading, setAddToCartLoading] = useState(false);
   let messageTimeoutId = useRef(null);
 
   function handelAddToCart(productId) {
@@ -16,6 +18,7 @@ export default function Product({ product, products }) {
       setCart,
       products,
       loadFetchedCart,
+      setAddToCartLoading,
     });
     if (added) {
       // Reset quantity after adding
@@ -31,6 +34,9 @@ export default function Product({ product, products }) {
       messageTimeoutId.current = setTimeout(() => {
         setShowAddedMessage(false);
       }, 1500);
+
+      //shows loading on add to cart
+      setAddToCartLoading(false);
     }
   }
 
@@ -78,14 +84,19 @@ export default function Product({ product, products }) {
         <img src="images/icons/checkmark.png" />
         Added
       </div>
-
       <button
         className="add-to-cart-button button-primary"
+        style={{ position: "relative" }}
         onClick={() => {
           handelAddToCart(product.id);
         }}
       >
         Add to Cart
+        {addToCartLoading && (
+          <div className={style.loadingBodyStyles}>
+            <div className={style.spinner}></div>
+          </div>
+        )}
       </button>
     </div>
   );
