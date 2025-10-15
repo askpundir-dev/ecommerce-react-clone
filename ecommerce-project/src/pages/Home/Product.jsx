@@ -28,7 +28,7 @@ export default function Product({ product, products }) {
         setShowAddedMessage(true);
         messageTimeoutId.current = setTimeout(
           () => setShowAddedMessage(false),
-          1500
+          1000
         );
       }
     } catch (err) {
@@ -83,8 +83,9 @@ export default function Product({ product, products }) {
         Added
       </div>
       <button
-        className="add-to-cart-button button-primary"
+        className={`add-to-cart-button button-primary ${addToCartLoading&&"cursor-change"}`}
         style={{ position: "relative" }}
+        disabled={addToCartLoading} // ✅ disables while request is in progress
         onClick={() => {
           handelAddToCart(product.id);
         }}

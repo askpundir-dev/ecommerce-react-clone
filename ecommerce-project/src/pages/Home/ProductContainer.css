@@ -88,3 +88,7 @@ opacity and make it visible. */
   height: 34px;
   margin-top: 1px;
 }
+
+.home-page .add-to-cart-button.cursor-change {
+  cursor: not-allowed;
+}
