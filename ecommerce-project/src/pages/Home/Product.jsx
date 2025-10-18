@@ -41,7 +41,12 @@ export default function Product({ product, products }) {
   return (
     <div className="product-container">
       <div className="product-image-container">
-        <img className="product-image" src={product.image} alt={product.name} />
+        <img
+          className="product-image"
+          src={product.image}
+          alt={product.name}
+          loading="lazy"
+        />
       </div>
 
       <div className="product-name limit-text-to-2-lines">{product.name}</div>
@@ -50,6 +55,7 @@ export default function Product({ product, products }) {
         <img
           className="product-rating-stars"
           src={`images/ratings/rating-${product.rating.stars * 10}.png`}
+          loading="lazy"
         />
         <div className="product-rating-count link-primary">
           {product.rating.count}
