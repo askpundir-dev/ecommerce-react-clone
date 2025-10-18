@@ -10,7 +10,7 @@ function OrderedProduct({ ordered, set$Package, orderTimeMs }) {
   return (
     <>
       <div className="product-image-container">
-        <img src={ordered.product.image} />
+        <img src={ordered.product.image} loading="lazy" />
       </div>
 
       <div className="product-details">
@@ -31,7 +31,7 @@ function OrderedProduct({ ordered, set$Package, orderTimeMs }) {
           }}
           className="buy-again-button button-primary"
         >
-          <img className="buy-again-icon" src="images/icons/buy-again.png" />
+          <img className="buy-again-icon" src="images/icons/buy-again.png" loading="lazy" />
           <span className="buy-again-message">Add to Cart</span>
         </button>
       </div>
