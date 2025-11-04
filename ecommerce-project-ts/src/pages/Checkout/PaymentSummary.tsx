@@ -1,11 +1,31 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import { useNavigate } from "react-router";
 import { /*calculateCartSummary*/ formatMoney } from "../../utils/money";
 import { fetchPaymentSummary, postOrdersRequest } from "../../api/api";
 import { useOrders } from "../../context-provider/Context";
 import styles from "./PaymentSummary.module.css";
-function PaymentSummary({ cart, setCart }) {
-  const [paymentSummary, setPaymentSummary] = useState(null);
+import type { CartItem } from "../../types/cartType";
+
+interface PaymentSummaryProps {
+  cart: CartItem[];
+  setCart: Dispatch<SetStateAction<CartItem[]>>;
+}
+
+interface PaymentSummary {
+  productCostCents: number;
+  shippingCostCents: number;
+  taxCents: number;
+  totalCostBeforeTaxCents: number;
+  totalCostCents: number;
+  totalItems: number;
+}
+
+function PaymentSummary({ cart, setCart }: PaymentSummaryProps) {
+  const [paymentSummary, setPaymentSummary] = useState<PaymentSummary | null>(
+    null
+  );
+  console.log(paymentSummary);
+
   const { loadFetchedOrders } = useOrders();
   useEffect(() => {
     fetchPaymentSummary()

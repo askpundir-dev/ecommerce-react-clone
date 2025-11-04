@@ -1,8 +1,10 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, type ReactNode } from "react";
 import { ProductsContext, CartContext, OrdersContext } from "./Context";
 import { fetchProducts, fetchCart, fetchOrders } from "../api/api";
-
-export function AppProvider({ children }) {
+import type { Product } from "../types/productsType";
+import type { CartItem } from "../types/cartType";
+import type { Order } from "../types/ordersType";
+export function AppProvider({ children }: { children: ReactNode }) {
   return (
     <ProductsProvider>
       <CartProvider>
@@ -12,9 +14,9 @@ export function AppProvider({ children }) {
   );
 }
 
-export function ProductsProvider({ children }) {
-  const [allProducts, setAllProducts] = useState([]);
-  const [products, setProducts] = useState([]);
+export function ProductsProvider({ children }: { children: ReactNode }) {
+  const [allProducts, setAllProducts] = useState<Array<Product>>([]);
+  const [products, setProducts] = useState<Array<Product>>([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
 
   const loadFetchedProducts = useCallback(async () => {
@@ -23,7 +25,11 @@ export function ProductsProvider({ children }) {
       setAllProducts(data);
       setProducts(data);
     } catch (error) {
-      console.error("Error loading data:", error.message);
+      if (error instanceof Error) {
+        console.error("Error loading data:", error.message);
+      } else {
+        console.error("Unknown error:", error);
+      }
     } finally {
       setLoadingProducts(false);
       console.log("Products Loaded Successfully!");
@@ -50,8 +56,9 @@ export function ProductsProvider({ children }) {
   );
 }
 
-export function CartProvider({ children }) {
-  const [cart, setCart] = useState([]);
+export function CartProvider({ children }: { children: ReactNode }) {
+  const [cart, setCart] = useState<Array<CartItem>>([]);
+  console.log(cart);
 
   const [loadingCart, setLoadingCart] = useState(true);
 
@@ -60,7 +67,7 @@ export function CartProvider({ children }) {
       const data = await fetchCart();
       setCart(data);
     } catch (error) {
-      console.error("Error loading data:", error.message);
+      console.error("Error loading data:", (error as Error).message);
     } finally {
       setLoadingCart(false);
       console.log("Cart Loaded Successfully!");
@@ -80,15 +87,15 @@ export function CartProvider({ children }) {
   );
 }
 
-export function OrdersProvider({ children }) {
-  const [orders, setOrders] = useState([]);
+export function OrdersProvider({ children }: { children: ReactNode }) {
+  const [orders, setOrders] = useState<Array<Order>>([]);
 
   const loadFetchedOrders = useCallback(async () => {
     try {
       const data = await fetchOrders();
       setOrders(data);
     } catch (err) {
-      console.log(err.message);
+      console.error("Error loading data:", (err as Error).message);
     } finally {
       console.log("Order Loaded Successfully!");
     }
@@ -104,3 +111,12 @@ export function OrdersProvider({ children }) {
     </OrdersContext.Provider>
   );
 }
+
+// function getErrorMessage(error: unknown): string {
+//   return error instanceof Error ? error.message : String(error);
+// }
+
+// // Then use:
+// } catch (error) {
+//   console.error("Error loading data:", getErrorMessage(error));
+// }

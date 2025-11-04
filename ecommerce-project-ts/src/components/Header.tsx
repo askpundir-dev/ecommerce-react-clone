@@ -1,14 +1,16 @@
 import { Link, useNavigate } from "react-router";
-import { useRef} from "react";
+import { useRef } from "react";
 import searchProducts from "../utils/searchProducts.js";
 import "./Header.css";
 import { useProducts, useCart } from "../context-provider/Context.js";
 
 function Header() {
-  const headerInputBoxRef = useRef(null);
+  const headerInputBoxRef = useRef<HTMLInputElement | null>(null);
   const { cart, loadFetchedCart } = useCart();
   const { products, setProducts, allProducts, loadFetchedProducts } =
     useProducts();
+  console.log(products);
+
   const navigate = useNavigate();
 
   return (
@@ -40,12 +42,11 @@ function Header() {
               if (e.key === "Enter") {
                 navigate("/");
                 searchProducts({
-                  products,
                   headerInputBoxRef,
                   allProducts,
                   setProducts,
                 });
-                e.target.blur();
+                e.currentTarget.blur();
               }
             }}
           />
@@ -55,7 +56,6 @@ function Header() {
             onClick={() => {
               navigate("/");
               searchProducts({
-                products,
                 headerInputBoxRef,
                 allProducts,
                 setProducts,

@@ -18,12 +18,15 @@ export const fetchDeliveryOptions = async () => {
   return response.data;
 };
 
-export const sendDeleteRequest = async (productId) => {
+export const sendDeleteRequest = async (productId: string) => {
   const response = await axios.delete(`${API_URL}/cart-items/${productId}`);
   return response.data;
 };
 
-export const sendUpdateCartReq = async (productId, quantityChange = 0) => {
+export const sendUpdateCartReq = async (
+  productId: string,
+  quantityChange = 0
+) => {
   const response = await axios.put(`${API_URL}/cart-items/${productId}`, {
     quantity: quantityChange,
   });
@@ -45,10 +48,12 @@ export const fetchOrders = async () => {
   return response.data;
 };
 
-export const sendDeliveryOptnUpdtReq = async (cartItemId, optionId) => {
+export const sendDeliveryOptnUpdtReq = async (
+  cartItemId: string,
+  optionId: string
+) => {
   const response = await axios.put(`${API_URL}/cart-items/${cartItemId}`, {
     deliveryOptionId: optionId,
   });
   return response.data;
 };
-

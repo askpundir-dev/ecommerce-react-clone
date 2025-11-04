@@ -77,7 +77,10 @@
   height: 100%;
   background: linear-gradient(90deg, #198754, #28a745);
   border-radius: 50px;
+  width: 0;
+  will-change: width;
   transition: width 700ms ease-in-out; /* smooth animation */
+
 }
 
 .no-tracking-info {

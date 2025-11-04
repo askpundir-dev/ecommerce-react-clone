@@ -1,6 +1,6 @@
-import './Loading.css';
+import "./Loading.css";
 
-function Loading({ loading }) {
+function Loading({ loading }: { loading: boolean }) {
   if (!loading) return null;
 
   return (

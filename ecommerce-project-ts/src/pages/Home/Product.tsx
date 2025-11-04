@@ -2,15 +2,21 @@ import { useState, useRef } from "react";
 import { useCart } from "../../context-provider/Context";
 import { formatMoney } from "../../utils/money";
 import addToCart from "../../utils/addToCart";
+import type { Product } from "../../types/productsType";
 
-export default function Product({ product, products }) {
+interface ProductProps {
+  product: Product;
+  products: Product[];
+}
+
+export default function Product({ product, products }: ProductProps) {
   const { setCart, loadFetchedCart } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [showAddedMessage, setShowAddedMessage] = useState(false);
-  let messageTimeoutId = useRef(null);
+  const messageTimeoutId = useRef<number | undefined>(undefined);
 
-  function handelAddToCart(productId) {
-    const added = addToCart({
+  async function handleAddToCart(productId: string) {
+    const added = await addToCart({
       productId,
       quantity,
       setCart,
@@ -82,7 +88,7 @@ export default function Product({ product, products }) {
       <button
         className="add-to-cart-button button-primary"
         onClick={() => {
-          handelAddToCart(product.id);
+          handleAddToCart(product.id);
         }}
       >
         Add to Cart

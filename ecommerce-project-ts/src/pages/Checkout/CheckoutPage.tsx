@@ -7,9 +7,10 @@ import { fetchDeliveryOptions } from "../../api/api";
 import "./CheckoutPage.css";
 import { useProducts, useCart } from "../../context-provider/Context";
 import Loading from "../../components/Loading";
+import type { DeliveryOption } from "../../types/deliveryOptionsType";
 function CheckoutPage() {
-  const [deliveryOptions, setDeliveryOptions] = useState([]);
-  const { allProducts, setProducts,loadFetchedProducts } = useProducts();
+  const [deliveryOptions, setDeliveryOptions] = useState<DeliveryOption[]>([]);
+  const { allProducts, setProducts, loadFetchedProducts } = useProducts();
   const { cart, setCart, loading } = useCart();
   useEffect(() => {
     fetchDeliveryOptions()
@@ -23,7 +24,7 @@ function CheckoutPage() {
   return (
     <>
       <title>Checkout</title>
-      <CheckoutHeader {...{ cart,loadFetchedProducts }} />
+      <CheckoutHeader {...{ cart, loadFetchedProducts }} />
       <Loading loading={loading} />
       {!loading && (
         <div className="checkout-page">

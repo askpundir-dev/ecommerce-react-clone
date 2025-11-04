@@ -1,12 +1,25 @@
 import dayjs from "dayjs";
 import { Link } from "react-router";
 import addToCart from "../../utils/addToCart";
-import { useContext } from "react";
-import { CartContext, ProductsContext } from "../../context-provider/Context";
+import type { Dispatch, SetStateAction } from "react";
+import { useCart, useProducts } from "../../context-provider/Context";
+// import type { Product } from "../../types/productsType";
+import type { Package } from "../../types/packageType";
+import type { OrderedProductType } from "../../types/ordersType";
 
-function OrderedProduct({ ordered, set$Package, orderTimeMs }) {
-  const { setCart, loadFetchedCart } = useContext(CartContext);
-  const { products } = useContext(ProductsContext);
+interface OrderedProductProps {
+  ordered: OrderedProductType;
+  set$Package: Dispatch<SetStateAction<Package | null>>;
+  orderTimeMs: number;
+}
+
+function OrderedProduct({
+  ordered,
+  set$Package,
+  orderTimeMs,
+}: OrderedProductProps) {
+  const { setCart, loadFetchedCart } = useCart();
+  const { products } = useProducts();
   return (
     <>
       <div className="product-image-container">

@@ -2,17 +2,17 @@ import { Link } from "react-router";
 import { useState, useEffect, useCallback } from "react";
 import dayjs from "dayjs";
 import Header from "../../components/Header";
+import type { Package } from "../../types/packageType";
 import "./TrackingPage.css";
 
-function TrackingPage({ $Package }) {
-  const [status, setStatus] = useState(null);
-
+function TrackingPage({ $Package }: { $Package: Package|null }) {
+  const [status, setStatus] = useState<string | null>(null);
   // ...existing code...
 
   const [percent, setPercent] = useState(0);
   console.log(percent);
-  
   const findStatus = useCallback(() => {
+    if (!$Package) return;
     const deliveryEndMs = $Package.estimatedDeliveryTimeMs; // delivery timestamp
     const orderCreatedAtMs = $Package.orderTimeMs; // order placed timestamp
     const timeNowMs = Date.now();
@@ -37,21 +37,26 @@ function TrackingPage({ $Package }) {
     }
 
     const percent = Math.min(100, Math.max(0, (elapsed / totalDuration) * 100));
-    setPercent(3+percent);
+    setPercent(3 + percent);
     console.log(percent);
 
     setStatus(status);
+    // return status;
   }, [$Package]);
 
   useEffect(() => {
     if ($Package) {
+      // const status = findStatus();
       findStatus();
+      console.log(status);
+
+      if (status === "Delivered") return; // stop if delivered
       const interval = setInterval(() => {
         findStatus();
       }, 5000); // update every 5 seconds
       return () => clearInterval(interval);
     }
-  }, [$Package, findStatus]);
+  }, [$Package, findStatus, status]);
 
   return (
     <>
@@ -117,7 +122,7 @@ function TrackingPage({ $Package }) {
             <div className="progress-bar-container">
               <div
                 className="progress-bar"
-                style={{ width: `${percent}%`}}
+                style={{ width: `${percent}%` }}
               ></div>
             </div>
           </div>

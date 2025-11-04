@@ -1,8 +1,15 @@
 import dayjs from "dayjs";
 import { formatMoney } from "../../utils/money";
 import { sendDeliveryOptnUpdtReq } from "../../api/api";
+import type { DeliveryOptionsProps } from "../../types/deliveryOptionsType";
 
-function DeliveryOptions({ setCart, cartItem, deliveryOptions }) {
+function DeliveryOptions({
+  setCart,
+  cartItem,
+  deliveryOptions,
+}: DeliveryOptionsProps) {
+  console.log(deliveryOptions);
+
   return deliveryOptions.map((option) => {
     return (
       <div className="delivery-option" key={option.id}>

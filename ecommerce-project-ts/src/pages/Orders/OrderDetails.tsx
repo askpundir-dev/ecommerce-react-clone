@@ -1,8 +1,16 @@
+import type { Dispatch, SetStateAction } from "react";
 import dayjs from "dayjs";
 import { formatMoney } from "../../utils/money";
-import OrderedProduct from "./OrderedProduct";
+import  OrderedProduct from "./OrderedProduct";
+import type { Order } from "../../types/ordersType";
+import type { Package } from "../../types/packageType";
 
-function OrderDetails({ order, set$Package }) {
+interface OrderDetailsProps {
+  order: Order;
+  set$Package: Dispatch<SetStateAction<Package | null>>;
+}
+
+function OrderDetails({ order, set$Package }: OrderDetailsProps) {
   return (
     <div className="order-container">
       <div className="order-header">

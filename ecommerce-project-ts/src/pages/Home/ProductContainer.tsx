@@ -3,7 +3,7 @@ import Product from "./Product";
 import "./ProductContainer.css";
 
 function ProductContainer() {
-  const  {products} = useProducts();
+  const { products } = useProducts();
   return (
     <>
       {products.map((product) => (
